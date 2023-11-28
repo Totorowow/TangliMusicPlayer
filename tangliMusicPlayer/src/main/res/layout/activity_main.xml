@@ -11,7 +11,7 @@
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/album_cover_daft_punk"
+        android:src="@drawable/main__cover"
         android:transitionName="@string/transition_name_cover"
         android:layout_height="wrap_content"/>
 

@@ -29,10 +29,9 @@ public class MainActivity extends PlayerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_list);
+        setContentView(R.layout.activity_main);
 
 
-        //
         mCoverView = findViewById(R.id.cover);
         mTitleView = findViewById(R.id.title);
         mTimeView = findViewById(R.id.time);
