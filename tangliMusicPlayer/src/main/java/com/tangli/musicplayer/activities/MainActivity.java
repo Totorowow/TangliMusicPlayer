@@ -31,6 +31,7 @@ public class MainActivity extends PlayerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_list);
 
+
         //
         mCoverView = findViewById(R.id.cover);
         mTitleView = findViewById(R.id.title);
