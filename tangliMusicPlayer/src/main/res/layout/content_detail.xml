@@ -7,19 +7,22 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.andremion.music.MusicCoverView
+    <com.tangli.musicplayer.view.MusicCoverView
         android:id="@+id/cover"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
         android:src="@drawable/main__cover"
         android:transitionName="@string/transition_name_cover"
-        app:shape="circle"  android:layout_height="wrap_content"/>
+        app:shape="circle"
+        app:trackColor="@color/transparent"/>
 
     <include
         android:id="@+id/title"
         layout="@layout/track_title"
         android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
@@ -54,8 +57,9 @@
         android:layout_alignTop="@id/timers_anchor"
         android:layout_toStartOf="@id/timers_anchor"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_marginEnd="10dp"
         android:transitionName="@string/transition_name_time"
-        tools:text="02:30"/>
+        tools:text="02:30" />
 
     <TextView
         android:id="@+id/duration"
@@ -81,7 +85,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:src="@drawable/ic_repeat_white_24dp"/>
+            android:src="@drawable/ic_repeat_white_24dp"
+            android:focusable="true" />
 
         <Space
             android:layout_width="@dimen/activity_horizontal_margin"
@@ -93,7 +98,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:src="@drawable/ic_shuffle_white_24dp"/>
+            android:src="@drawable/ic_shuffle_white_24dp"
+            android:focusable="true" />
 
     </LinearLayout>
 

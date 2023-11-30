@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
 
-import com.andremion.music.MusicCoverView;
-
 
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
 
 public class DetailActivity extends PlayerActivity {
-
     private MusicCoverView mCoverView;
 
     @Override
