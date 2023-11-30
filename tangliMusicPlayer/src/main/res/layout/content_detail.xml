@@ -32,16 +32,7 @@
         android:transitionName="@string/transition_name_progress"
         android:layout_height="wrap_content" android:layout_width="wrap_content"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:onClick="onFabClick"
-        android:scaleType="center"
-        android:src="@drawable/ic_pause_animatable"
-        android:transitionName="@string/transition_name_fab"
-        />
+
 
     <Space
         android:id="@+id/timers_anchor"
@@ -109,33 +100,49 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
         android:transitionGroup="true">
 
         <ImageView
             android:id="@+id/previous"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_skip_previous_white_24dp"/>
 
         <ImageView
             android:id="@+id/rewind"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_fast_rewind_white_24dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="onFabClick"
+            android:scaleType="center"
+            android:src="@drawable/ic_pause_animatable"
+            android:transitionName="@string/transition_name_fab"
+            />
 
         <ImageView
             android:id="@+id/forward"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_fast_forward_white_24dp"/>
 
         <ImageView
             android:id="@+id/next"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_skip_next_white_24dp"/>
 
