@@ -9,7 +9,7 @@ import android.view.View;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
 import com.tangli.musicplayer.music.MusicContent;
-import com.tangli.musicplayer.view.RecyclerViewAdapter;
+import com.tangli.musicplayer.adapter.RecyclerViewAdapter;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -27,11 +27,9 @@ public class MainActivity extends PlayerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding=ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_main);
-        RecyclerView recyclerView = findViewById(R.id.tracks);
-        assert recyclerView != null;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RecyclerViewAdapter(MusicContent.ITEMS));
+        setContentView(mainBinding.getRoot());
+        mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
+        mainBinding.tracks.setAdapter(new RecyclerViewAdapter(MusicContent.ITEMS));
     }
 
     public void onFabClick(View view) {

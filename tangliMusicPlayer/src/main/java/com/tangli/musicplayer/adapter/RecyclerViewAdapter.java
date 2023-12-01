@@ -1,5 +1,5 @@
 
-package com.tangli.musicplayer.view;
+package com.tangli.musicplayer.adapter;
 
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.databinding.ContentListItemBinding;
 import com.tangli.musicplayer.music.MusicContent;
 
 import java.util.List;
@@ -23,12 +24,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(List<MusicContent.MusicItem> items) {
         mValues = items;
     }
+    private ContentListItemBinding itemBinding;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.content_list_item, parent, false);
-        return new ViewHolder(view);
+
+        itemBinding=ContentListItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        return new ViewHolder(itemBinding);
     }
 
     @Override
@@ -57,13 +59,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public final TextView mDurationView;
         public MusicContent.MusicItem mItem;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mCoverView = view.findViewById(R.id.cover);
-            mTitleView = view.findViewById(R.id.title);
-            mArtistView = view.findViewById(R.id.artist);
-            mDurationView = view.findViewById(R.id.duration);
+        public ViewHolder(ContentListItemBinding binding) {
+            super(binding.getRoot());
+            mView = binding.getRoot();
+            mCoverView = binding.cover;
+            mTitleView = binding.title;
+            mArtistView = binding.artist;
+            mDurationView = binding.duration;
         }
     }
 
