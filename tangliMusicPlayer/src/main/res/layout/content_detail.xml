@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true">
 
     <com.tangli.musicplayer.view.MusicCoverView
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true" />
 
     <com.tangli.musicplayer.view.ProgressView
@@ -51,6 +53,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:layout_marginEnd="10dp"
         android:transitionName="@string/transition_name_time"
+        android:textColor="@color/colorWhite"
         tools:text="02:30" />
 
     <TextView
@@ -61,6 +64,7 @@
         android:layout_toEndOf="@id/timers_anchor"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:transitionName="@string/transition_name_duration"
+        android:textColor="@color/colorWhite"
         tools:text="04:30"/>
 
     <LinearLayout

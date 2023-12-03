@@ -26,8 +26,9 @@ import android.view.WindowInsets;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
-import com.andremion.music.MusicCoverViewTransition;
+
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.transition.MusicCoverViewTransition;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -44,8 +45,8 @@ public class MusicCoverView extends androidx.appcompat.widget.AppCompatImageView
     public static final int SHAPE_RECTANGLE = 0;
     public static final int SHAPE_CIRCLE = 1;
 
-    static final int ALPHA_TRANSPARENT = 0;
-    static final int ALPHA_OPAQUE = 255;
+    public static final int ALPHA_TRANSPARENT = 0;
+    public static final int ALPHA_OPAQUE = 255;
 
     private static final float TRACK_SIZE = 10;
     private static final float TRACK_WIDTH = 1;
@@ -205,11 +206,11 @@ public class MusicCoverView extends androidx.appcompat.widget.AppCompatImageView
         return mTrackPaint.getColor();
     }
 
-    float getTransitionRadius() {
+    public float getTransitionRadius() {
         return mRadius;
     }
 
-    void setTransitionRadius(float radius) {
+    public void setTransitionRadius(float radius) {
         if (radius != mRadius) {
             mRadius = radius;
             resetPaths();
@@ -217,24 +218,24 @@ public class MusicCoverView extends androidx.appcompat.widget.AppCompatImageView
         }
     }
 
-    int getViewTransitionAlpha() {
+    public int getViewTransitionAlpha() {
         return mTrackPaint.getAlpha() * ALPHA_OPAQUE / mTrackAlpha;
     }
 
-    void setTransitionAlpha(@IntRange(from = ALPHA_TRANSPARENT, to = ALPHA_OPAQUE) int alpha) {
+    public void setTransitionAlpha(@IntRange(from = ALPHA_TRANSPARENT, to = ALPHA_OPAQUE) int alpha) {
         if (alpha != getViewTransitionAlpha()) {
             mTrackPaint.setAlpha(alpha * mTrackAlpha / ALPHA_OPAQUE);
             invalidate();
         }
     }
 
-    float getMinRadius() {
+    public float getMinRadius() {
         final int w = getWidth();
         final int h = getHeight();
         return Math.min(w, h) / 2f;
     }
 
-    float getMaxRadius() {
+    public float getMaxRadius() {
         final int w = getWidth();
         final int h = getHeight();
         return (float) Math.hypot(w / 2f, h / 2f);

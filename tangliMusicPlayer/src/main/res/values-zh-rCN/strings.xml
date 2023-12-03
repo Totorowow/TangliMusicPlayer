@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">棠梨音乐播放器</string>
+
+    <string name="transition_name_title" translatable="false">标题</string>
+    <string name="transition_name_cover" translatable="false">封面</string>
+    <string name="transition_name_time" translatable="false">时间</string>
+    <string name="transition_name_duration" translatable="false">时长</string>
+    <string name="transition_name_progress" translatable="false">进度条</string>
+    <string name="transition_name_fab" translatable="false">悬浮球</string>
+    <string name="language">语言</string>
+    <string name="simplified_chinese">简体中文</string>
+    <string name="english">英语</string>
+    <string name="select_language">选择语言</string>
+    <string name="confirm">确认</string>
+    <string name="about">关于</string>
+
+</resources>

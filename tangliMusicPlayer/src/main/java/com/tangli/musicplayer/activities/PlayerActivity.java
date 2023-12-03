@@ -21,7 +21,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class PlayerActivity extends AppCompatActivity {
+public abstract class PlayerActivity extends BaseActivity {
 
     private PlayerService mService;
     private boolean mBound = false;
