@@ -28,7 +28,7 @@
         android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true" />
 
-    <com.tangli.musicplayer.view.ProgressView
+    <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/progress"
         android:layout_centerInParent="true"
         android:transitionName="@string/transition_name_progress"

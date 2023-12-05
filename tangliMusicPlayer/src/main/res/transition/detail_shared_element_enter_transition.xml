@@ -4,7 +4,6 @@
     android:interpolator="@android:interpolator/accelerate_quad">
 
     <!--Progress-->
-    <transition class="com.tangli.musicplayer.transition.ProgressViewTransition" />
     <!--Cover-->
     <transition class="com.andremion.music.MusicCoverViewTransition" />
     <!--Others-->

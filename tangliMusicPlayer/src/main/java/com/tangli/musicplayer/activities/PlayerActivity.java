@@ -15,11 +15,10 @@ import android.widget.TextView;
 
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.PlayerService;
-import com.tangli.musicplayer.view.ProgressView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 
 public abstract class PlayerActivity extends BaseActivity {
 
@@ -27,7 +26,8 @@ public abstract class PlayerActivity extends BaseActivity {
     private boolean mBound = false;
     private TextView mTimeView;
     private TextView mDurationView;
-    private ProgressView mProgressView;
+    private AppCompatSeekBar mProgressView;
+
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
         @Override

@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.andremion.music.MusicCoverView;
 import com.google.android.material.navigation.NavigationView;
+import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
 import com.tangli.musicplayer.databinding.TrackTitleBinding;
@@ -45,22 +46,22 @@ public class MainActivity extends PlayerActivity {
         mainBinding=ActivityMainBinding.inflate(getLayoutInflater());
         preferences = getSharedPreferences("tangli_music_player", Context.MODE_PRIVATE);
         setContentView(mainBinding.getRoot());
+        StatusBarUtil.setColor(this, getColor(R.color.colorBlack));
+        StatusBarUtil.setLightMode(this);
         mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
         mainBinding.tracks.setAdapter(new RecyclerViewAdapter(MusicContent.ITEMS));
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(Gravity.LEFT));
-        mainBinding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.language_item:
-                        setAppLanguage();
-                        break;
-                    default:
-                        break;
-                }
-                mainBinding.drawerLayout.closeDrawers();
-                return true;
+
+        mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.language_item:
+                    setAppLanguage();
+                    break;
+                default:
+                    break;
             }
+            mainBinding.drawerLayout.closeDrawers();
+            return true;
         });
 
     }
