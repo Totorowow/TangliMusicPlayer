@@ -3,9 +3,12 @@ package com.tangli.musicplayer.music;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
+import java.io.IOException;
 
 public class PlayerService extends Service {
 
@@ -15,6 +18,8 @@ public class PlayerService extends Service {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
     private Worker mWorker;
+
+
 
     public PlayerService() {
     }
@@ -32,22 +37,26 @@ public class PlayerService extends Service {
         return super.onUnbind(intent);
     }
 
-    public void play() {
+    public void play(MediaPlayer mediaPlayer) {
         if (mWorker == null) {
             mWorker = new Worker();
             mWorker.start();
         } else {
             mWorker.doResume();
         }
+        mediaPlayer.start();
     }
 
     public boolean isPlaying() {
         return mWorker != null && mWorker.isPlaying();
     }
 
-    public void pause() {
+    public void pause(MediaPlayer mediaPlayer) {
         if (mWorker != null) {
             mWorker.doPause();
+            if (mediaPlayer.isPlaying()){
+                mediaPlayer.start();
+            }
         }
     }
 

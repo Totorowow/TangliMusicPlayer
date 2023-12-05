@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.PlayerService;
+
+import java.io.IOException;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -77,6 +80,7 @@ public abstract class PlayerActivity extends BaseActivity {
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -94,6 +98,7 @@ public abstract class PlayerActivity extends BaseActivity {
             unbindService(mConnection);
             mBound = false;
         }
+
         super.onDestroy();
     }
 
@@ -105,12 +110,14 @@ public abstract class PlayerActivity extends BaseActivity {
         mUpdateProgressHandler.removeMessages(0);
     }
 
-    public void play() {
-        mService.play();
+    public void play(MediaPlayer mediaPlayer) {
+        mService.play(mediaPlayer);
     }
 
-    public void pause() {
-        mService.pause();
+    public void pause(MediaPlayer mediaPlayer) {
+        mService.pause(mediaPlayer);
     }
+
+
 
 }
