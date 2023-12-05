@@ -17,7 +17,7 @@
         android:src="@drawable/main__cover"
         android:transitionName="@string/transition_name_cover"
         app:shape="circle"
-        app:trackColor="@color/transparent"/>
+        app:trackColor="@color/transparent" />
 
     <include
         android:id="@+id/title"
@@ -28,24 +28,36 @@
         android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true" />
 
+
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cover"
         android:layout_centerInParent="true"
-        android:transitionName="@string/transition_name_progress"
-        android:visibility="invisible"
-        android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="10dp"
+        android:max="100"
+        android:min="0"
+        android:thumbTint="@color/colorWhite"
+        android:progressBackgroundTint="@color/lightGray"
+        android:progressTint="@color/orange"
+        android:transitionName="@string/transition_name_progress" />
+
+
 
 
 
     <Space
         android:id="@+id/timers_anchor"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cover"
+        android:layout_below="@id/progress"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"/>
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/fence_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/timers_anchor"
@@ -71,7 +83,7 @@
         android:id="@+id/ordering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time"
+        android:layout_below="@id/fence_time"
         android:layout_centerHorizontal="true"
         android:transitionGroup="true">
 
@@ -98,6 +110,8 @@
             android:focusable="true" />
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/controls"

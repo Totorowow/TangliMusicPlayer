@@ -82,7 +82,7 @@ public abstract class PlayerActivity extends BaseActivity {
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        mTimeView = findViewById(R.id.time);
+        mTimeView = findViewById(R.id.fence_time);
         mDurationView = findViewById(R.id.duration);
         mProgressView = findViewById(R.id.progress);
     }

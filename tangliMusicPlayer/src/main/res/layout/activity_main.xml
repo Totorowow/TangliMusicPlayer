@@ -71,6 +71,11 @@
                     android:layout_marginEnd="@dimen/inner_padding"
                     android:layout_marginStart="@dimen/inner_padding"
                     android:layout_weight="1"
+                    android:max="100"
+                    android:min="0"
+                    android:thumbTint="@color/colorWhite"
+                    android:progressBackgroundTint="@color/lightGray"
+                    android:progressTint="@color/orange"
                     android:transitionName="@string/transition_name_progress"/>
 
                 <TextView
