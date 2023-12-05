@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.andremion.music.MusicCoverView;
 import com.google.android.material.navigation.NavigationView;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
@@ -92,6 +93,8 @@ public class MainActivity extends PlayerActivity {
                     }
                 });
         singleChoiceDialog.show();
+
+
 
     }
 
