@@ -5,11 +5,14 @@ package com.tangli.musicplayer.activities;
 import android.app.StatusBarManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
+import android.widget.Toast;
 
+import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.view.MusicCoverView;
@@ -21,7 +24,6 @@ public class DetailActivity extends PlayerActivity {
 
     private MusicCoverView mCoverView;
 
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class DetailActivity extends PlayerActivity {
         mCoverView = findViewById(R.id.cover);
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
-        initMediaPlayer();
+
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
             public void onMorphEnd(MusicCoverView coverView) {
@@ -47,7 +49,7 @@ public class DetailActivity extends PlayerActivity {
         getWindow().getSharedElementEnterTransition().addListener(new TransitionAdapter() {
             @Override
             public void onTransitionEnd(Transition transition) {
-                play(mediaPlayer);
+                play();
                 mCoverView.start();
             }
         });
@@ -60,23 +62,16 @@ public class DetailActivity extends PlayerActivity {
     }
 
     public void onFabClick(View view) {
-        pause(mediaPlayer);
+        pause();
         mCoverView.stop();
     }
 
-    private void initMediaPlayer() {
-        mediaPlayer=new MediaPlayer();
-        mediaPlayer=MediaPlayer.create(this,R.raw.ukulele_fun_background);
 
-    }
 
     @Override
     protected void onDestroy() {
         // Unbind from the service
-        if (mediaPlayer != null){
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
+
         super.onDestroy();
     }
 

@@ -8,16 +8,19 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.hjq.toast.Toaster;
+
 import java.io.IOException;
 
 public class PlayerService extends Service {
 
     private static final String TAG = PlayerService.class.getSimpleName();
-    private static final int DURATION = 335;
+    private static final int DURATION = 108;
 
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
     private Worker mWorker;
+    private int musicDuration=-1;
 
 
 
@@ -37,13 +40,15 @@ public class PlayerService extends Service {
         return super.onUnbind(intent);
     }
 
-    public void play(MediaPlayer mediaPlayer) {
+    public void play(MediaPlayer mediaPlayer,int duration) {
         if (mWorker == null) {
             mWorker = new Worker();
             mWorker.start();
         } else {
             mWorker.doResume();
         }
+        mWorker.setDuration(duration);
+
         mediaPlayer.start();
     }
 
@@ -55,7 +60,7 @@ public class PlayerService extends Service {
         if (mWorker != null) {
             mWorker.doPause();
             if (mediaPlayer.isPlaying()){
-                mediaPlayer.start();
+                mediaPlayer.pause();
             }
         }
     }
@@ -67,19 +72,25 @@ public class PlayerService extends Service {
         return 0;
     }
 
-    public int getDuration() {
-        return DURATION;
+    public int getMusicDuration() {
+        if (mWorker != null) {
+            return mWorker.getDuration();
+        }else {
+            return DURATION;
+        }
     }
 
     private static class Worker extends Thread {
 
         boolean paused = false;
         int position = 0;
+        int musicDuration=-1;
 
         @Override
         public void run() {
+
             try {
-                while (position < DURATION) {
+                while (position < (musicDuration!=-1?musicDuration:DURATION)) {
                     sleep(1000);
                     if (!paused) {
                         position++;
@@ -104,6 +115,12 @@ public class PlayerService extends Service {
 
         int getPosition() {
             return position;
+        }
+        int getDuration() {
+            return musicDuration;
+        }
+        void setDuration(int duration) {
+            musicDuration=duration;
         }
     }
 

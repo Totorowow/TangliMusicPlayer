@@ -14,6 +14,7 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 
+import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.PlayerService;
 
@@ -31,12 +32,14 @@ public abstract class PlayerActivity extends BaseActivity {
     private TextView mDurationView;
     private AppCompatSeekBar mProgressView;
 
+    private MediaPlayer mediaPlayer;
+    private int duration=108;
+
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             final int position = mService.getPosition();
-            final int duration = mService.getDuration();
             onUpdateProgress(position, duration);
             sendEmptyMessageDelayed(0, DateUtils.SECOND_IN_MILLIS);
         }
@@ -71,6 +74,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }
         if (mProgressView != null) {
             mProgressView.setProgress(position);
+            mProgressView.setMax(duration);
         }
     }
 
@@ -80,6 +84,7 @@ public abstract class PlayerActivity extends BaseActivity {
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        initMediaPlayer();
 
     }
 
@@ -98,6 +103,10 @@ public abstract class PlayerActivity extends BaseActivity {
             unbindService(mConnection);
             mBound = false;
         }
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
 
         super.onDestroy();
     }
@@ -110,12 +119,20 @@ public abstract class PlayerActivity extends BaseActivity {
         mUpdateProgressHandler.removeMessages(0);
     }
 
-    public void play(MediaPlayer mediaPlayer) {
-        mService.play(mediaPlayer);
+    public void play() {
+        mService.play(mediaPlayer,duration);
+
     }
 
-    public void pause(MediaPlayer mediaPlayer) {
+    public void pause() {
         mService.pause(mediaPlayer);
+    }
+
+    private void initMediaPlayer() {
+        mediaPlayer=new MediaPlayer();
+        mediaPlayer=MediaPlayer.create(this,R.raw.ukulele_fun_background);
+        duration=mediaPlayer.getDuration()/1000;
+
     }
 
 
