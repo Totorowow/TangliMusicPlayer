@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ukulele Fun Background"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="18sp"
         android:textColor="@color/colorWhite"/>
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" - "
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="18sp"
         android:textColor="@color/colorWhite"/>
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PaulYudin"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="18sp"
         android:textColor="@color/colorWhite"/>
 
 </LinearLayout>

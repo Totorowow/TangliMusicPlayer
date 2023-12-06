@@ -62,8 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/timers_anchor"
         android:layout_toStartOf="@id/timers_anchor"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:layout_marginEnd="10dp"
+        android:textSize="14sp"
+        android:layout_marginStart="25dp"
+        android:layout_alignParentStart="true"
         android:transitionName="@string/transition_name_time"
         android:textColor="@color/colorWhite"
         tools:text="02:30" />
@@ -74,7 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/timers_anchor"
         android:layout_toEndOf="@id/timers_anchor"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_marginEnd="25dp"
+        android:textSize="14sp"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"
         android:transitionName="@string/transition_name_duration"
         android:textColor="@color/colorWhite"
         tools:text="04:30"/>
