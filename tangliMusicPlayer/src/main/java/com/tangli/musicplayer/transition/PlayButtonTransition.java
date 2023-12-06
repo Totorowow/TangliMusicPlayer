@@ -5,6 +5,9 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.transition.Transition;
 import android.transition.TransitionValues;
@@ -72,6 +75,9 @@ public class PlayButtonTransition extends Transition {
         } else {
             drawable = (AnimatedVectorDrawable) context.getDrawable(R.drawable.ic_pause_animatable);
         }
+
+
+
         fabView.setImageDrawable(drawable);
 
         return new AnimatedVectorDrawableWrapper(drawable);

@@ -5,6 +5,7 @@ package com.tangli.musicplayer.activities;
 import android.app.StatusBarManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.transition.Transition;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
@@ -23,6 +25,7 @@ import java.io.IOException;
 public class DetailActivity extends PlayerActivity {
 
     private MusicCoverView mCoverView;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -31,8 +34,10 @@ public class DetailActivity extends PlayerActivity {
         setContentView(R.layout.content_detail);
 
         mCoverView = findViewById(R.id.cover);
+        fab=findViewById(R.id.fab);
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
+        fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override

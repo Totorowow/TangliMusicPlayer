@@ -151,7 +151,9 @@
             android:scaleType="center"
             android:src="@drawable/ic_play_animatable"
             android:transitionName="@string/transition_name_fab"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            app:backgroundTint="#1E90FF"
+            />
 
     </RelativeLayout>
 

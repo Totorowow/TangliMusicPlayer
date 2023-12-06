@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -51,6 +52,7 @@ public class MainActivity extends PlayerActivity {
         mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
         mainBinding.tracks.setAdapter(new RecyclerViewAdapter(MusicContent.ITEMS));
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(Gravity.LEFT));
+        mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {

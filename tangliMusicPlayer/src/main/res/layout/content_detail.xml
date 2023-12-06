@@ -144,14 +144,14 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="onFabClick"
             android:scaleType="center"
             android:src="@drawable/ic_pause_animatable"
             android:transitionName="@string/transition_name_fab"
-            />
+            app:backgroundTint="#5CACEE" />
 
         <ImageView
             android:id="@+id/forward"
