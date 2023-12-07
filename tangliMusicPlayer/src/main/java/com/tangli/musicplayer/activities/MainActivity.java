@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 
 import com.andremion.music.MusicCoverView;
@@ -40,6 +41,8 @@ public class MainActivity extends PlayerActivity {
     private ActivityMainBinding mainBinding;
     private int selectItem=-1;
     private SharedPreferences preferences;
+    private RecyclerViewAdapter recyclerViewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,7 @@ public class MainActivity extends PlayerActivity {
         setContentView(mainBinding.getRoot());
         StatusBarUtil.setColor(this, getColor(R.color.colorBlack));
         StatusBarUtil.setLightMode(this);
-        mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
-        mainBinding.tracks.setAdapter(new RecyclerViewAdapter(MusicContent.ITEMS));
+        initSongAdapter();
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(Gravity.LEFT));
         mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
@@ -69,6 +71,29 @@ public class MainActivity extends PlayerActivity {
     }
 
     public void onFabClick(View view) {
+        playSong();
+    }
+
+    private void initSongAdapter(){
+        mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAdapter=new RecyclerViewAdapter(MusicContent.ITEMS);
+        recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                playSong();
+
+            }
+
+            @Override
+            public void onItemLongClick() {
+
+            }
+        });
+        mainBinding.tracks.setAdapter(recyclerViewAdapter);
+
+    }
+
+    private void playSong(){
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 new Pair<>(mainBinding.cover, ViewCompat.getTransitionName(mainBinding.cover)),
                 new Pair<>(mainBinding.lotusTitle.getRoot(), ViewCompat.getTransitionName(mainBinding.lotusTitle.getRoot())),

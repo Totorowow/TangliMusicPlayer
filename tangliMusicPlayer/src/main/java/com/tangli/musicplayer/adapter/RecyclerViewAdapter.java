@@ -5,6 +5,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mValues = items;
     }
     private ContentListItemBinding itemBinding;
+    private OnItemClickListener mOnItemClickListener;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,9 +42,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mTitleView.setText(holder.mItem.getTitle());
         holder.mArtistView.setText(holder.mItem.getArtist());
         holder.mDurationView.setText(DateUtils.formatElapsedTime(holder.mItem.getDuration()));
-
         holder.mView.setOnClickListener(v -> {
-            // Nothing to do
+            if (null != mOnItemClickListener) {
+                mOnItemClickListener.onItemClick();
+            }
+        });
+
+        holder.mView.setOnLongClickListener(v -> {
+            if (null != mOnItemClickListener) {
+                mOnItemClickListener.onItemLongClick();
+                return true;
+            }
+            return false;
         });
     }
 
@@ -68,5 +79,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mDurationView = binding.duration;
         }
     }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+    public interface OnItemClickListener {
+        public void onItemClick();
+        public void onItemLongClick();
+    }
+
 
 }
