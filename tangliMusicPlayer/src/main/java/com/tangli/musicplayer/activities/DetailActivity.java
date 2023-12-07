@@ -17,24 +17,28 @@ import com.tangli.musicplayer.view.TransitionAdapter;
 
 public class DetailActivity extends PlayerActivity {
 
+    private MusicCoverView mCoverView;
+    private FloatingActionButton fab;
 
-    private ContentDetailBinding detailBinding;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        detailBinding=ContentDetailBinding.inflate(getLayoutInflater());
-        setContentView(detailBinding.getRoot());
 
+        setContentView(R.layout.content_detail);
+
+
+        mCoverView = findViewById(R.id.cover);
+        fab=findViewById(R.id.fab);
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
-        detailBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
 
-        detailBinding.cover.setCallbacks(new MusicCoverView.Callbacks() {
+        mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
             public void onMorphEnd(MusicCoverView coverView) {
                 // Nothing to do
@@ -50,7 +54,7 @@ public class DetailActivity extends PlayerActivity {
             @Override
             public void onTransitionEnd(Transition transition) {
                 play();
-                detailBinding.cover.start();
+                mCoverView.start();
             }
         });
 
@@ -63,7 +67,7 @@ public class DetailActivity extends PlayerActivity {
 
     public void onFabClick(View view) {
         pause();
-        detailBinding.cover.stop();
+        mCoverView.stop();
     }
 
 
