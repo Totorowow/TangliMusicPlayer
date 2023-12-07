@@ -13,5 +13,6 @@
     <string name="select_language">选择语言</string>
     <string name="confirm">确认</string>
     <string name="about">关于</string>
+    <string name="favorites">喜欢</string>
 
 </resources>

@@ -11,7 +11,7 @@ public class MusicContent {
     public static final List<MusicItem> ITEMS = new ArrayList<>();
 
     static {
-        ITEMS.add(new MusicItem(R.drawable.camphor, "I will possess your heart", "Death Cab for Cutie", 515));
+        ITEMS.add(new MusicItem(R.drawable.camphor, "Again summer", "Music_Unlimited", 515));
         ITEMS.add(new MusicItem(R.drawable.album_cover_the_1975, "You", "the 1975", 591));
         ITEMS.add(new MusicItem(R.drawable.album_cover_pinback, "The Yellow Ones", "Pinback", 215));
         ITEMS.add(new MusicItem(R.drawable.album_cover_soad, "Chop suey", "System of a down", 242));
