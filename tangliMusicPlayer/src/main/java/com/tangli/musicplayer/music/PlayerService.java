@@ -40,7 +40,10 @@ public class PlayerService extends Service {
         return super.onUnbind(intent);
     }
 
-    public void play(MediaPlayer mediaPlayer,int duration) {
+    public void play(MediaPlayer mediaPlayer,int duration,boolean restart) {
+        if (restart && mWorker!=null){
+            mWorker=null;
+        }
         if (mWorker == null) {
             mWorker = new Worker();
             mWorker.start();

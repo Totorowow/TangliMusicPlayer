@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +36,8 @@ public abstract class PlayerActivity extends BaseActivity {
 
     private MediaPlayer mediaPlayer;
     private int duration=108;
-
     private int resId;
+    private SharedPreferences preferences;
 
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
@@ -84,6 +85,7 @@ public abstract class PlayerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = getSharedPreferences("tangli_music_player", Context.MODE_PRIVATE);
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -123,6 +125,13 @@ public abstract class PlayerActivity extends BaseActivity {
     }
 
     public void play(int position) {
+        if (preferences.getBoolean("first_click",true)){
+            preferences.edit().putBoolean("first_click",false).apply();
+            preferences.edit().putInt("last_position",position).apply();
+        }else {
+            preferences.edit().putBoolean("first_click",true).apply();
+            preferences.edit().putInt("next_position",position).apply();
+        }
         if (position==-1){
             resId=R.raw.ukulele_fun_background;
         }else {
@@ -130,8 +139,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }
         mediaPlayer=MediaPlayer.create(this,resId);
         duration=mediaPlayer.getDuration()/1000;
-        mService.play(mediaPlayer,duration);
-
+        mService.play(mediaPlayer, duration, preferences.getInt("last_position",-1) != preferences.getInt("next_position",-1));
 
     }
 

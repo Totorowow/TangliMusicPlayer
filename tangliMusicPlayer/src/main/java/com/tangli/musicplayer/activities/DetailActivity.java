@@ -2,6 +2,8 @@
 
 package com.tangli.musicplayer.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
