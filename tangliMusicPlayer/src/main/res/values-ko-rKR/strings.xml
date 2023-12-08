@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">탕리 뮤직 플레이어</string>
+
+    <string name="transition_name_title" translatable="false">제목</string>
+    <string name="transition_name_cover" translatable="false">표지</string>
+    <string name="transition_name_time" translatable="false">시간</string>
+    <string name="transition_name_duration" translatable="false">기간</string>
+    <string name="transition_name_progress" translatable="false">진행률 표시줄</string>
+    <string name="transition_name_fab" translatable="false">멈춘 공</string>
+    <string name="language">언어</string>
+    <string name="simplified_chinese">중국어 간체</string>
+    <string name="english">영어</string>
+    <string name="japanese">일본어</string>
+    <string name="korean">한국어</string>
+    <string name="select_language">언어 선택</string>
+    <string name="confirm">확인</string>
+    <string name="about">정보</string>
+    <string name="favorites">좋아요</string>
+</resources>

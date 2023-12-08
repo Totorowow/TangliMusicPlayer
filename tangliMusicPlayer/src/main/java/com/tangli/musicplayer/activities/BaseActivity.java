@@ -11,11 +11,22 @@ import java.util.Locale;
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity{
+
+    private Locale locale;
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(LanguageUtil.attachBaseContext(context));
         SharedPreferences preferences = getSharedPreferences("tangli_music_player", Context.MODE_PRIVATE);
-        LanguageUtil.changeAppLanguage(preferences.getInt("app_language",0)==0? Locale.SIMPLIFIED_CHINESE :Locale.ENGLISH,this);
+        if (preferences.getInt("app_language",0)==0){
+            locale=Locale.SIMPLIFIED_CHINESE;
+        }else if (preferences.getInt("app_language",0)==2){
+            locale=Locale.JAPANESE;
+        }else if (preferences.getInt("app_language",0)==3){
+            locale=Locale.KOREAN;
+        }else{
+            locale=Locale.ENGLISH;
+        }
+        LanguageUtil.changeAppLanguage(locale,this);
     }
 
     @Override

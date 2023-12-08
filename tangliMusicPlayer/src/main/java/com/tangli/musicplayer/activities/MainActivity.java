@@ -113,7 +113,7 @@ public class MainActivity extends PlayerActivity {
     }
 
     private void setAppLanguage(){
-        final String[] items = { getString(R.string.simplified_chinese),getString(R.string.english) };
+        final String[] items = { getString(R.string.simplified_chinese),getString(R.string.english),getString(R.string.japanese),getString(R.string.korean) };
         selectItem=preferences.getInt("app_language",0);
         AlertDialog.Builder singleChoiceDialog =
                 new AlertDialog.Builder(MainActivity.this);

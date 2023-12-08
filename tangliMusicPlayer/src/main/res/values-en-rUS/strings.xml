@@ -10,6 +10,8 @@
     <string name="language">Language</string>
     <string name="simplified_chinese">Simplified Chinese</string>
     <string name="english">English</string>
+    <string name="japanese">Japanese</string>
+    <string name="korean">Korean</string>
     <string name="select_language">Select language</string>
     <string name="confirm">Confirm</string>
     <string name="about">About</string>
