@@ -19,6 +19,7 @@ import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.music.PlayerService;
+import com.tangli.musicplayer.util.TinyDB;
 
 import java.io.IOException;
 
@@ -37,7 +38,8 @@ public abstract class PlayerActivity extends BaseActivity {
     private MediaPlayer mediaPlayer;
     private int duration=108;
     private int resId;
-    private SharedPreferences preferences;
+
+    private TinyDB tinydb;
 
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
@@ -85,7 +87,7 @@ public abstract class PlayerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = getSharedPreferences("tangli_music_player", Context.MODE_PRIVATE);
+        tinydb= new TinyDB(this);
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -125,12 +127,12 @@ public abstract class PlayerActivity extends BaseActivity {
     }
 
     public void play(int position) {
-        if (preferences.getBoolean("first_click",true)){
-            preferences.edit().putBoolean("first_click",false).apply();
-            preferences.edit().putInt("last_position",position).apply();
+        if (tinydb.getBoolean("first_click")){
+            tinydb.putBoolean("first_click",false);
+            tinydb.putInt("last_position",position);
         }else {
-            preferences.edit().putBoolean("first_click",true).apply();
-            preferences.edit().putInt("next_position",position).apply();
+            tinydb.putBoolean("first_click",true);
+            tinydb.putInt("next_position",position);
         }
         if (position==-1){
             resId=R.raw.ukulele_fun_background;
@@ -139,7 +141,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }
         mediaPlayer=MediaPlayer.create(this,resId);
         duration=mediaPlayer.getDuration()/1000;
-        mService.play(mediaPlayer, duration, preferences.getInt("last_position",-1) != preferences.getInt("next_position",-1));
+        mService.play(mediaPlayer, duration, tinydb.getInt("last_position") != tinydb.getInt("next_position"));
 
     }
 
