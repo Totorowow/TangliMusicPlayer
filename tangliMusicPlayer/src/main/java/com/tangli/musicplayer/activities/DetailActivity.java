@@ -10,6 +10,7 @@ import android.transition.Transition;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
@@ -67,7 +68,9 @@ public class DetailActivity extends PlayerActivity {
                 if (clickedItem!=-1) {
                     musicName.setText(MusicContent.ITEMS.get(clickedItem).getTitle());
                     musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
-                    mCoverView.setImageDrawable(ResourcesCompat.getDrawable(getResources(),MusicContent.ITEMS.get(clickedItem).getCover(),null));
+                    Glide.with(DetailActivity.this).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
+                }else {
+                    Glide.with(DetailActivity.this).load(R.drawable.main__cover).into(mCoverView);
                 }
                 play(clickedItem);
                 mCoverView.start();

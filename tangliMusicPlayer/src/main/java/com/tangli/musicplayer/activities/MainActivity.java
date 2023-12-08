@@ -43,8 +43,6 @@ public class MainActivity extends PlayerActivity {
     private int selectItem=-1;
     private SharedPreferences preferences;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private int clickedItem=-1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,7 @@ public class MainActivity extends PlayerActivity {
     }
 
     public void onFabClick(View view) {
-        playSong();
+        playSong(-1);
     }
 
     private void initSongAdapter(){
@@ -82,8 +80,7 @@ public class MainActivity extends PlayerActivity {
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                clickedItem=position;
-                playSong();
+                playSong(position);
 
 
             }
@@ -97,7 +94,7 @@ public class MainActivity extends PlayerActivity {
 
     }
 
-    private void playSong(){
+    private void playSong(int position){
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 new Pair<>(mainBinding.cover, ViewCompat.getTransitionName(mainBinding.cover)),
                 new Pair<>(mainBinding.lotusTitle.getRoot(), ViewCompat.getTransitionName(mainBinding.lotusTitle.getRoot())),
@@ -107,7 +104,7 @@ public class MainActivity extends PlayerActivity {
                 new Pair<>(mainBinding.fab, ViewCompat.getTransitionName(mainBinding.fab)));
         Bundle bundle=options.toBundle();
         Intent intent=new Intent(this, DetailActivity.class);
-        Objects.requireNonNull(bundle).putInt("clicked_item",clickedItem);
+        Objects.requireNonNull(bundle).putInt("clicked_item",position);
         intent.putExtra("snow_bundle",bundle);
         ActivityCompat.startActivity(this, intent, bundle);
     }

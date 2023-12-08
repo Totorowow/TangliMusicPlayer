@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
-        android:src="@drawable/main__cover"
         android:transitionName="@string/transition_name_cover"
         app:shape="circle"
         app:trackColor="@color/transparent" />
