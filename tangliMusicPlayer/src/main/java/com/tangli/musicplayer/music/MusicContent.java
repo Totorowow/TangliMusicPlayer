@@ -12,8 +12,8 @@ public class MusicContent {
 
     static {
         ITEMS.add(new MusicItem(R.drawable.camphor, "Again summer", "Music_Unlimited", 515,R.raw.again_summer_151646));
-        ITEMS.add(new MusicItem(R.drawable.album_cover_the_1975, "You", "the 1975", 591,R.raw.ukulele_fun_background));
-        ITEMS.add(new MusicItem(R.drawable.album_cover_pinback, "The Yellow Ones", "Pinback", 215,R.raw.ukulele_fun_background));
+        ITEMS.add(new MusicItem(R.drawable.album_cover_the_1975, "High In The Sky", "AlexiAction", 591,R.raw.high_in_the_sky_128400));
+        ITEMS.add(new MusicItem(R.drawable.album_cover_pinback, "Indie Folk (Journey To The Sun)", "AlexGrohl", 215,R.raw.indie_folk_journey_to_the_sun_15044));
         ITEMS.add(new MusicItem(R.drawable.album_cover_soad, "Chop suey", "System of a down", 242,R.raw.ukulele_fun_background));
         ITEMS.add(new MusicItem(R.drawable.album_cover_two_door, "Something good can work", "Two Door Cinema Club", 164,R.raw.ukulele_fun_background));
     }
