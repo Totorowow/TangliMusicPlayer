@@ -7,11 +7,14 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.databinding.ContentDetailBinding;
+import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
 
@@ -19,6 +22,9 @@ public class DetailActivity extends PlayerActivity {
 
     private MusicCoverView mCoverView;
     private FloatingActionButton fab;
+    private int clickedItem=-1;
+    private TextView musicName;
+    private TextView musicAuthor;
 
 
 
@@ -32,12 +38,14 @@ public class DetailActivity extends PlayerActivity {
 
         mCoverView = findViewById(R.id.cover);
         fab=findViewById(R.id.fab);
+        musicName=findViewById(R.id.music_name);
+        musicAuthor=findViewById(R.id.music_author);
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
         fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-
-
+        Bundle bundle=getIntent().getBundleExtra("snow_bundle");
+        clickedItem=bundle.getInt("clicked_item");
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
             public void onMorphEnd(MusicCoverView coverView) {
@@ -53,7 +61,11 @@ public class DetailActivity extends PlayerActivity {
         getWindow().getSharedElementEnterTransition().addListener(new TransitionAdapter() {
             @Override
             public void onTransitionEnd(Transition transition) {
-                play();
+                if (clickedItem!=-1) {
+                    musicName.setText(MusicContent.ITEMS.get(clickedItem).getTitle());
+                    musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
+                }
+                play(clickedItem);
                 mCoverView.start();
             }
         });

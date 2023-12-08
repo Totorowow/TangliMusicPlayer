@@ -44,13 +44,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mDurationView.setText(DateUtils.formatElapsedTime(holder.mItem.getDuration()));
         holder.mView.setOnClickListener(v -> {
             if (null != mOnItemClickListener) {
-                mOnItemClickListener.onItemClick();
+                mOnItemClickListener.onItemClick(position);
             }
         });
 
         holder.mView.setOnLongClickListener(v -> {
             if (null != mOnItemClickListener) {
-                mOnItemClickListener.onItemLongClick();
+                mOnItemClickListener.onItemLongClick(position);
                 return true;
             }
             return false;
@@ -84,8 +84,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mOnItemClickListener = onItemClickListener;
     }
     public interface OnItemClickListener {
-        public void onItemClick();
-        public void onItemLongClick();
+        public void onItemClick(int position);
+        public void onItemLongClick(int position);
     }
 
 

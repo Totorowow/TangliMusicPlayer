@@ -25,6 +25,7 @@ import com.tangli.musicplayer.adapter.RecyclerViewAdapter;
 import com.tangli.musicplayer.util.LanguageUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -42,6 +43,7 @@ public class MainActivity extends PlayerActivity {
     private int selectItem=-1;
     private SharedPreferences preferences;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private int clickedItem=-1;
 
 
     @Override
@@ -79,13 +81,15 @@ public class MainActivity extends PlayerActivity {
         recyclerViewAdapter=new RecyclerViewAdapter(MusicContent.ITEMS);
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick() {
+            public void onItemClick(int position) {
+                clickedItem=position;
                 playSong();
+
 
             }
 
             @Override
-            public void onItemLongClick() {
+            public void onItemLongClick(int position) {
 
             }
         });
@@ -101,7 +105,11 @@ public class MainActivity extends PlayerActivity {
                 new Pair<>(mainBinding.duration, ViewCompat.getTransitionName(mainBinding.duration)),
                 new Pair<>(mainBinding.progress, ViewCompat.getTransitionName(mainBinding.progress)),
                 new Pair<>(mainBinding.fab, ViewCompat.getTransitionName(mainBinding.fab)));
-        ActivityCompat.startActivity(this, new Intent(this, DetailActivity.class), options.toBundle());
+        Bundle bundle=options.toBundle();
+        Intent intent=new Intent(this, DetailActivity.class);
+        Objects.requireNonNull(bundle).putInt("clicked_item",clickedItem);
+        intent.putExtra("snow_bundle",bundle);
+        ActivityCompat.startActivity(this, intent, bundle);
     }
 
     private void setAppLanguage(){

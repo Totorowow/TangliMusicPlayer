@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.music.PlayerService;
 
 import java.io.IOException;
@@ -34,6 +35,8 @@ public abstract class PlayerActivity extends BaseActivity {
 
     private MediaPlayer mediaPlayer;
     private int duration=108;
+
+    private int resId;
 
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
@@ -84,7 +87,7 @@ public abstract class PlayerActivity extends BaseActivity {
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        initMediaPlayer();
+        mediaPlayer=new MediaPlayer();
 
     }
 
@@ -119,22 +122,22 @@ public abstract class PlayerActivity extends BaseActivity {
         mUpdateProgressHandler.removeMessages(0);
     }
 
-    public void play() {
+    public void play(int position) {
+        if (position==-1){
+            resId=R.raw.ukulele_fun_background;
+        }else {
+            resId=MusicContent.ITEMS.get(position).getResId();
+        }
+        mediaPlayer=MediaPlayer.create(this,resId);
+        duration=mediaPlayer.getDuration()/1000;
         mService.play(mediaPlayer,duration);
+
 
     }
 
     public void pause() {
         mService.pause(mediaPlayer);
     }
-
-    private void initMediaPlayer() {
-        mediaPlayer=new MediaPlayer();
-        mediaPlayer=MediaPlayer.create(this,R.raw.ukulele_fun_background);
-        duration=mediaPlayer.getDuration()/1000;
-
-    }
-
 
 
 }
