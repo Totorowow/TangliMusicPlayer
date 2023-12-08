@@ -2,6 +2,7 @@
 
 package com.tangli.musicplayer.activities;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.tangli.musicplayer.databinding.ContentDetailBinding;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
+
+import androidx.core.content.res.ResourcesCompat;
 
 public class DetailActivity extends PlayerActivity {
 
@@ -64,6 +67,7 @@ public class DetailActivity extends PlayerActivity {
                 if (clickedItem!=-1) {
                     musicName.setText(MusicContent.ITEMS.get(clickedItem).getTitle());
                     musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
+                    mCoverView.setImageDrawable(ResourcesCompat.getDrawable(getResources(),MusicContent.ITEMS.get(clickedItem).getCover(),null));
                 }
                 play(clickedItem);
                 mCoverView.start();
