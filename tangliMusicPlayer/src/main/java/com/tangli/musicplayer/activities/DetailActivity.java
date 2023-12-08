@@ -2,9 +2,6 @@
 
 package com.tangli.musicplayer.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -14,15 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
-import com.tangli.musicplayer.databinding.ContentDetailBinding;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
-
-import androidx.core.content.res.ResourcesCompat;
 
 public class DetailActivity extends PlayerActivity {
 
@@ -72,7 +65,7 @@ public class DetailActivity extends PlayerActivity {
                     musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
                     Glide.with(DetailActivity.this).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
                 }else {
-                    Glide.with(DetailActivity.this).load(R.drawable.main__cover).into(mCoverView);
+                    Glide.with(DetailActivity.this).load(R.drawable.main_cover).into(mCoverView);
                 }
                 play(clickedItem);
                 mCoverView.start();

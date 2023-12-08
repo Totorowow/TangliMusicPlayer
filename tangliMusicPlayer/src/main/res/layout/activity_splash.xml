@@ -8,5 +8,5 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/main__cover"/>
+        android:src="@drawable/forest_party"/>
 </RelativeLayout>
