@@ -145,5 +145,9 @@ public abstract class PlayerActivity extends BaseActivity {
         mService.pause(mediaPlayer);
     }
 
+    public void rePlay() {
+        mService.rePlay(mediaPlayer);
+    }
+
 
 }

@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 
 import com.andremion.music.MusicCoverView;
 import com.google.android.material.navigation.NavigationView;
+import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
@@ -77,6 +78,8 @@ public class MainActivity extends PlayerActivity {
     private void initSongAdapter(){
         mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewAdapter=new RecyclerViewAdapter(MusicContent.ITEMS);
+
+
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -100,7 +103,7 @@ public class MainActivity extends PlayerActivity {
                 new Pair<>(mainBinding.lotusTitle.getRoot(), ViewCompat.getTransitionName(mainBinding.lotusTitle.getRoot())),
                 new Pair<>(mainBinding.time, ViewCompat.getTransitionName(mainBinding.time)),
                 new Pair<>(mainBinding.duration, ViewCompat.getTransitionName(mainBinding.duration)),
-                new Pair<>(mainBinding.progress, ViewCompat.getTransitionName(mainBinding.progress)),
+                new Pair<>(mainBinding.musicProgress, ViewCompat.getTransitionName(mainBinding.musicProgress)),
                 new Pair<>(mainBinding.fab, ViewCompat.getTransitionName(mainBinding.fab)));
         Bundle bundle=options.toBundle();
         Intent intent=new Intent(this, DetailActivity.class);

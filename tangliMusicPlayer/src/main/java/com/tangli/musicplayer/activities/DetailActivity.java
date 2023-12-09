@@ -2,20 +2,31 @@
 
 package com.tangli.musicplayer.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.ContactsContract;
 import android.transition.Transition;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import androidx.annotation.RawRes;
 
 public class DetailActivity extends PlayerActivity {
 
@@ -24,6 +35,7 @@ public class DetailActivity extends PlayerActivity {
     private int clickedItem=-1;
     private TextView musicName;
     private TextView musicAuthor;
+    private ImageView repeat;
 
 
 
@@ -45,6 +57,7 @@ public class DetailActivity extends PlayerActivity {
         fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
+
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
             public void onMorphEnd(MusicCoverView coverView) {
@@ -57,12 +70,15 @@ public class DetailActivity extends PlayerActivity {
             }
         });
 
+
         getWindow().getSharedElementEnterTransition().addListener(new TransitionAdapter() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTransitionEnd(Transition transition) {
                 if (clickedItem!=-1) {
                     musicName.setText(MusicContent.ITEMS.get(clickedItem).getTitle());
                     musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
+
                     Glide.with(DetailActivity.this).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
                 }else {
                     Glide.with(DetailActivity.this).load(R.drawable.main_cover).into(mCoverView);
@@ -73,6 +89,7 @@ public class DetailActivity extends PlayerActivity {
         });
 
     }
+
 
     @Override
     public void onBackPressed() {

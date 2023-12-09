@@ -67,6 +67,15 @@ public class PlayerService extends Service {
             }
         }
     }
+    public void rePlay(MediaPlayer mediaPlayer) {
+        if (mWorker != null) {
+            mWorker=null;
+        }
+        mWorker = new Worker();
+        mWorker.start();
+        mediaPlayer.seekTo(0);
+        mediaPlayer.start();
+    }
 
     public int getPosition() {
         if (mWorker != null) {

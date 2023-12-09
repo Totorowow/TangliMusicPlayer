@@ -28,6 +28,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ContentListItemBinding itemBinding;
     private OnItemClickListener mOnItemClickListener;
 
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -61,6 +63,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return mValues.size();
     }
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
