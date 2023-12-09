@@ -8,10 +8,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.hjq.toast.Toaster;
-
-import java.io.IOException;
-
 public class PlayerService extends Service {
 
     private static final String TAG = PlayerService.class.getSimpleName();
@@ -41,7 +37,8 @@ public class PlayerService extends Service {
     }
 
     public void play(MediaPlayer mediaPlayer,int duration,boolean restart) {
-        if (restart && mWorker!=null){
+        boolean playingFinished = getPosition() == getMusicDuration();  // Determine whether playback is complete
+        if ((restart || playingFinished) && mWorker!=null){
             mWorker=null;
         }
         if (mWorker == null) {
@@ -49,9 +46,12 @@ public class PlayerService extends Service {
             mWorker.start();
         } else {
             mWorker.doResume();
+            if (getPosition()>0){
+                mediaPlayer.seekTo(getPosition()*1000);
+            }
+            Log.e(TAG,"Last play progress:"+getPosition());
         }
         mWorker.setDuration(duration);
-
         mediaPlayer.start();
     }
 
@@ -75,11 +75,13 @@ public class PlayerService extends Service {
         return 0;
     }
 
+
+
     public int getMusicDuration() {
         if (mWorker != null) {
             return mWorker.getDuration();
         }else {
-            return DURATION;
+            return -1;
         }
     }
 

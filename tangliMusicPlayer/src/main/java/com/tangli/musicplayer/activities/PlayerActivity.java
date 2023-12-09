@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,13 +14,10 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 
-import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.music.PlayerService;
 import com.tangli.musicplayer.util.TinyDB;
-
-import java.io.IOException;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
