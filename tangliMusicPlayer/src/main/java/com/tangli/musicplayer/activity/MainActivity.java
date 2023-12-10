@@ -1,41 +1,29 @@
 
-package com.tangli.musicplayer.activities;
+package com.tangli.musicplayer.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 
-
-import com.andremion.music.MusicCoverView;
-import com.google.android.material.navigation.NavigationView;
-import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
-import com.tangli.musicplayer.databinding.ActivityMainBinding;
-import com.tangli.musicplayer.databinding.TrackTitleBinding;
-import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.adapter.RecyclerViewAdapter;
-import com.tangli.musicplayer.util.LanguageUtil;
+import com.tangli.musicplayer.databinding.ActivityMainBinding;
+import com.tangli.musicplayer.music.MusicContent;
 
-import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends PlayerActivity {
 
@@ -54,13 +42,16 @@ public class MainActivity extends PlayerActivity {
         StatusBarUtil.setColor(this, getColor(R.color.colorBlack));
         StatusBarUtil.setLightMode(this);
         initSongAdapter();
-        mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(Gravity.LEFT));
+        mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(GravityCompat.START));
         mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.language_item:
                     setAppLanguage();
+                    break;
+                case R.id.about_item:
+                    startActivity(new Intent(this,AboutActivity.class));
                     break;
                 default:
                     break;

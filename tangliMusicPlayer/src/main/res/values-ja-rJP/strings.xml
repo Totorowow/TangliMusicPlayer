@@ -15,4 +15,7 @@
     <string name="confirm">確認</string>
     <string name="about">について</string>
     <string name="favorites">お気に入り</string>
+    <string name="user_name">タンリ</string>
+    <string name="user_job">音楽家</string>
+    <string name="personal_description">叶えた願いがずっと花開き、風にも砂にも負けずあの頃の夢を護衛して欲しい</string>
 </resources>

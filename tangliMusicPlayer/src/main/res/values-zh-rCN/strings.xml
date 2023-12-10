@@ -16,5 +16,8 @@
     <string name="confirm">确认</string>
     <string name="about">关于</string>
     <string name="favorites">喜欢</string>
+    <string name="user_name">棠梨</string>
+    <string name="user_job">音乐人</string>
+    <string name="personal_description">我希望许过的愿望一路生花,护送那时的梦抵挡过风沙</string>
 
 </resources>

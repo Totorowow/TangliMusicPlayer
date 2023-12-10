@@ -1,4 +1,4 @@
-package com.tangli.musicplayer.activities;
+package com.tangli.musicplayer.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

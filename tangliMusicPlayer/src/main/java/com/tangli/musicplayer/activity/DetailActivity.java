@@ -1,13 +1,11 @@
 
 
-package com.tangli.musicplayer.activities;
+package com.tangli.musicplayer.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.FileUtils;
-import android.provider.ContactsContract;
 import android.transition.Transition;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,18 +13,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import androidx.annotation.RawRes;
 
 public class DetailActivity extends PlayerActivity {
 

@@ -1,20 +1,8 @@
 
 package com.tangli.musicplayer.music;
 
-import android.content.Context;
-import android.media.MediaMetadataRetriever;
-import android.net.Uri;
-import android.util.Log;
-
-import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
-import com.tangli.musicplayer.TangliApplication;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.tangli.musicplayer.activities;
+package com.tangli.musicplayer.activity;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;

@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:noHistory="true"
@@ -23,11 +23,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.Main" />
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".activity.DetailActivity"
             android:theme="@style/AppTheme.Detail" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/AppTheme.Main" />
 
         <service
             android:name=".music.PlayerService"

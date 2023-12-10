@@ -17,4 +17,7 @@
     <string name="confirm">확인</string>
     <string name="about">정보</string>
     <string name="favorites">좋아요</string>
+    <string name="user_name">탕글리</string>
+    <string name="user_job">음악가</string>
+    <string name="personal_description">내가 꾸었던 소원들이 쭉 꽃피워, 바람과 모래를 이겨내고 그때의 꿈을 호위하길 바라요</string>
 </resources>
