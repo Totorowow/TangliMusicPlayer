@@ -26,6 +26,7 @@ public class DetailActivity extends PlayerActivity {
     private TextView musicName;
     private TextView musicAuthor;
     private ImageView switchPlayState;
+    private ImageView closePage;
 
 
 
@@ -41,12 +42,17 @@ public class DetailActivity extends PlayerActivity {
         musicName=findViewById(R.id.music_name);
         musicAuthor=findViewById(R.id.music_author);
         switchPlayState=findViewById(R.id.switch_play_state);
+        closePage=findViewById(R.id.close_page);
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
         switchPlayState.setOnClickListener(v -> changePlayState());
+        closePage.setOnClickListener(v -> {
+            mCoverView.stop();
+            supportFinishAfterTransition();
+        });
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override

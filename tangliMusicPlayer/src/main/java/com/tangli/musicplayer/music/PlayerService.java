@@ -41,6 +41,7 @@ public class PlayerService extends Service {
         if ((restart || playingFinished) && mWorker!=null){
             mWorker=null;
         }
+
         if (mWorker == null) {
             mWorker = new Worker();
             mWorker.start();
