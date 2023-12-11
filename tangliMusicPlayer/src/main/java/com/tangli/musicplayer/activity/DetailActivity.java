@@ -3,8 +3,6 @@
 package com.tangli.musicplayer.activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
@@ -12,21 +10,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.TransitionAdapter;
 
+import androidx.appcompat.content.res.AppCompatResources;
+
 public class DetailActivity extends PlayerActivity {
 
     private MusicCoverView mCoverView;
-    private FloatingActionButton fab;
+
     private int clickedItem=-1;
     private TextView musicName;
     private TextView musicAuthor;
-    private ImageView repeat;
+    private ImageView switchPlayState;
 
 
 
@@ -35,29 +34,30 @@ public class DetailActivity extends PlayerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.content_detail);
+        setContentView(R.layout.activity_detail);
 
 
         mCoverView = findViewById(R.id.cover);
-        fab=findViewById(R.id.fab);
         musicName=findViewById(R.id.music_name);
         musicAuthor=findViewById(R.id.music_author);
+        switchPlayState=findViewById(R.id.switch_play_state);
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
-        fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
+        switchPlayState.setOnClickListener(v -> changePlayState());
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
             public void onMorphEnd(MusicCoverView coverView) {
                 // Nothing to do
+
             }
 
             @Override
             public void onRotateEnd(MusicCoverView coverView) {
-                supportFinishAfterTransition();
+                pause();
             }
         });
 
@@ -81,15 +81,24 @@ public class DetailActivity extends PlayerActivity {
 
     }
 
+    private void changePlayState(){
+
+        if (mCoverView.isRunning()) {
+            switchPlayState.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.ic_play_arrow));
+            mCoverView.stop();
+        }else {
+            switchPlayState.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.ic_pause_music));
+            play(clickedItem);
+            mCoverView.start();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
-        onFabClick(null);
-    }
-
-    public void onFabClick(View view) {
-        pause();
+        //pause();
         mCoverView.stop();
+        supportFinishAfterTransition();
     }
 
 

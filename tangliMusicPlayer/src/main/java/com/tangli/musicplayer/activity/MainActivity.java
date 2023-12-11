@@ -18,6 +18,7 @@ import com.tangli.musicplayer.music.MusicContent;
 import java.util.Objects;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
@@ -44,6 +45,7 @@ public class MainActivity extends PlayerActivity {
         initSongAdapter();
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(GravityCompat.START));
         mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
 
         mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
