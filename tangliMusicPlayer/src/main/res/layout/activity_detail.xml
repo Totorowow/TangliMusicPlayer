@@ -186,6 +186,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:transitionName="@string/transition_name_fab"
             android:src="@drawable/ic_pause_music"/>
 
 

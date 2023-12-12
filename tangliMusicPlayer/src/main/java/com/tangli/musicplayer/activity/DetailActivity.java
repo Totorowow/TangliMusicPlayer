@@ -74,7 +74,6 @@ public class DetailActivity extends PlayerActivity {
 
 
         getWindow().getSharedElementEnterTransition().addListener(new TransitionAdapter() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onTransitionEnd(Transition transition) {
                 if (clickedItem!=-1) {
