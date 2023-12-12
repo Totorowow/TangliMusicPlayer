@@ -58,7 +58,7 @@ public class MusicCoverView extends androidx.appcompat.widget.AppCompatImageView
     private static final float DURATION_PER_DEGREES = DURATION / FULL_ANGLE;
 
     private final ValueAnimator mStartRotateAnimator;
-    private final ValueAnimator mEndRotateAnimator;
+    private ValueAnimator mEndRotateAnimator;
     private final Transition mCircleToRectTransition;
     private final Transition mRectToCircleTransition;
 
@@ -339,6 +339,15 @@ public class MusicCoverView extends androidx.appcompat.widget.AppCompatImageView
             mStartRotateAnimator.cancel();
         }
     }
+
+    public void pause() {
+        if (mStartRotateAnimator.isRunning()) {
+            mStartRotateAnimator.pause();
+            mEndRotateAnimator=null;
+        }
+    }
+
+
 
     @Override
     public boolean isRunning() {

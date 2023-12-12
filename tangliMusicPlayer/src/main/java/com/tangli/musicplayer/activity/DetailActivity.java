@@ -27,6 +27,7 @@ public class DetailActivity extends PlayerActivity {
     private TextView musicAuthor;
     private ImageView switchPlayState;
     private ImageView closePage;
+    private boolean isClosePage;
 
 
 
@@ -36,7 +37,6 @@ public class DetailActivity extends PlayerActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail);
-
 
         mCoverView = findViewById(R.id.cover);
         musicName=findViewById(R.id.music_name);
@@ -50,8 +50,7 @@ public class DetailActivity extends PlayerActivity {
         clickedItem=bundle.getInt("clicked_item");
         switchPlayState.setOnClickListener(v -> changePlayState());
         closePage.setOnClickListener(v -> {
-            mCoverView.stop();
-            supportFinishAfterTransition();
+            endAnimation();
         });
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
@@ -64,6 +63,12 @@ public class DetailActivity extends PlayerActivity {
             @Override
             public void onRotateEnd(MusicCoverView coverView) {
                 pause();
+                if (isClosePage) {
+                    mCoverView.stop();
+                    supportFinishAfterTransition();
+
+                }
+
             }
         });
 
@@ -88,9 +93,10 @@ public class DetailActivity extends PlayerActivity {
     }
 
     private void changePlayState(){
-
+        isClosePage=false;
         if (mCoverView.isRunning()) {
             switchPlayState.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.ic_play_arrow));
+            pause();
             mCoverView.stop();
         }else {
             switchPlayState.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.ic_pause_music));
@@ -102,17 +108,21 @@ public class DetailActivity extends PlayerActivity {
 
     @Override
     public void onBackPressed() {
-        //pause();
+        endAnimation();
+    }
+
+    private void endAnimation(){
+        isClosePage=true;
         mCoverView.stop();
-        supportFinishAfterTransition();
+        if (!mCoverView.isRunning()) {
+            supportFinishAfterTransition();
+        }
     }
 
 
 
     @Override
     protected void onDestroy() {
-        // Unbind from the service
-
         super.onDestroy();
     }
 
