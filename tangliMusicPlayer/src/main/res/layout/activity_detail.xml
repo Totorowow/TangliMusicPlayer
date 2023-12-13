@@ -46,14 +46,6 @@
     </LinearLayout>
 
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/track_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top_area"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorWhite" />
 
     <com.tangli.musicplayer.view.MusicCoverView
         android:id="@+id/cover"
@@ -67,12 +59,81 @@
         app:trackColor="@color/transparent" />
 
 
+    <LinearLayout
+        android:id="@+id/ordering"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cover"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:transitionGroup="true">
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:transitionName="@string/transition_name_title">
+
+            <com.tangli.musicplayer.view.ScrollTextView
+                android:id="@+id/music_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:singleLine="true"
+                app:text_size="18sp"
+                app:text="Ukulele Fun Background"
+                app:text_color="@color/colorWhite"
+                app:isScrollForever="true"
+                app:speed="4"
+                 />
+
+            <TextView
+                android:id="@+id/music_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PaulYudin"
+
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"/>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/repeat"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:src="@drawable/ic_repeat_white_24dp"
+            android:focusable="true" />
+
+
+        <ImageView
+            android:id="@+id/shuffle"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:src="@drawable/ic_shuffle_white_24dp"
+            android:focusable="true" />
+
+    </LinearLayout>
+
+
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cover"
+        android:layout_below="@+id/ordering"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="21dp"
@@ -122,37 +183,6 @@
         android:textColor="@color/colorWhite"
         tools:text="04:30"/>
 
-    <LinearLayout
-        android:id="@+id/ordering"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fence_time"
-        android:layout_centerHorizontal="true"
-        android:transitionGroup="true">
-
-        <ImageView
-            android:id="@+id/repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:src="@drawable/ic_repeat_white_24dp"
-            android:focusable="true" />
-
-        <Space
-            android:layout_width="@dimen/activity_horizontal_margin"
-            android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:id="@+id/shuffle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:src="@drawable/ic_shuffle_white_24dp"
-            android:focusable="true" />
-
-    </LinearLayout>
 
 
 
