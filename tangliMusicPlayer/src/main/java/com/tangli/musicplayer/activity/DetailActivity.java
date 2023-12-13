@@ -2,10 +2,8 @@
 
 package com.tangli.musicplayer.activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.transition.Transition;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +24,11 @@ public class DetailActivity extends PlayerActivity {
     private TextView musicName;
     private TextView musicAuthor;
     private ImageView switchPlayState;
+    private ImageView playNext;
     private ImageView closePage;
     private boolean isClosePage;
+    private DetailActivity detailActivity;
+
 
 
 
@@ -42,16 +43,20 @@ public class DetailActivity extends PlayerActivity {
         musicName=findViewById(R.id.music_name);
         musicAuthor=findViewById(R.id.music_author);
         switchPlayState=findViewById(R.id.switch_play_state);
+        playNext=findViewById(R.id.next);
         closePage=findViewById(R.id.close_page);
+        detailActivity=this;
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
         switchPlayState.setOnClickListener(v -> changePlayState());
+        playNext.setOnClickListener(v -> playNextSong());
         closePage.setOnClickListener(v -> {
             endAnimation();
         });
+
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
             @Override
@@ -77,12 +82,10 @@ public class DetailActivity extends PlayerActivity {
             @Override
             public void onTransitionEnd(Transition transition) {
                 if (clickedItem!=-1) {
-                    musicName.setText(MusicContent.ITEMS.get(clickedItem).getTitle());
-                    musicAuthor.setText(MusicContent.ITEMS.get(clickedItem).getArtist());
-
-                    Glide.with(DetailActivity.this).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
+                   updateCurrentSong(clickedItem);
                 }else {
-                    Glide.with(DetailActivity.this).load(R.drawable.main_cover).into(mCoverView);
+
+                    Glide.with(detailActivity).load(R.drawable.main_cover).into(mCoverView);
                 }
                 play(clickedItem);
                 mCoverView.start();
@@ -102,6 +105,27 @@ public class DetailActivity extends PlayerActivity {
             play(clickedItem);
             mCoverView.start();
         }
+    }
+
+    private void playNextSong(){
+        if (clickedItem!=-1 && clickedItem < MusicContent.ITEMS.size()-1){
+            clickedItem++;
+            updateCurrentSong(clickedItem);
+        }else if (clickedItem!=-1 && clickedItem == MusicContent.ITEMS.size()-1){
+            clickedItem=-1;
+            Glide.with(detailActivity).load(R.drawable.main_cover).into(mCoverView);
+        }else {
+            clickedItem=0;
+            Glide.with(detailActivity).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
+        }
+        play(clickedItem);
+        mCoverView.start();
+    }
+
+    private void updateCurrentSong(int item){
+        musicName.setText(MusicContent.ITEMS.get(item).getTitle());
+        musicAuthor.setText(MusicContent.ITEMS.get(item).getArtist());
+        Glide.with(detailActivity).load(MusicContent.ITEMS.get(item).getCover()).into(mCoverView);
     }
 
 

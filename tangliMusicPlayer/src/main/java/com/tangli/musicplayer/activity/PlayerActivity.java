@@ -135,6 +135,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }else {
             resId=MusicContent.ITEMS.get(position).getResId();
         }
+        mediaPlayer.release();
         mediaPlayer=MediaPlayer.create(this,resId);
         duration=mediaPlayer.getDuration()/1000;
         mService.play(mediaPlayer, duration, tinydb.getInt("last_position") != tinydb.getInt("next_position"));
