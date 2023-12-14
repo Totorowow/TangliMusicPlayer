@@ -127,10 +127,10 @@ public class DetailActivity extends PlayerActivity {
             clickedItem++;
             updateCurrentSong(clickedItem);
         }else if (clickedItem!=-1 && clickedItem == MusicContent.ITEMS.size()-1){
-            clickedItem=-1;
+            clickedItem=0;
             Glide.with(detailActivity).load(R.drawable.main_cover).into(mCoverView);
         }else {
-            clickedItem=0;
+            clickedItem=1;
             Glide.with(detailActivity).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
         }
         play(clickedItem);
@@ -138,15 +138,15 @@ public class DetailActivity extends PlayerActivity {
     }
 
     private void playLastSong(){
-        if (clickedItem!=-1 && clickedItem >0){
+        if (clickedItem!=-1 && clickedItem >1){
             clickedItem--;
             updateCurrentSong(clickedItem);
-        }else if (clickedItem==0){
-            clickedItem=-1;
+        }else if (clickedItem==1){
+            clickedItem=0;
             Glide.with(detailActivity).load(R.drawable.main_cover).into(mCoverView);
         }else {
             clickedItem=MusicContent.ITEMS.size()-1;
-            Glide.with(detailActivity).load(MusicContent.ITEMS.get(MusicContent.ITEMS.size()-1).getCover()).into(mCoverView);
+            Glide.with(detailActivity).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
         }
         play(clickedItem);
         mCoverView.start();

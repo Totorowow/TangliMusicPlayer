@@ -1,6 +1,7 @@
 
 package com.tangli.musicplayer.adapter;
 
+import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.TangliApplication;
 import com.tangli.musicplayer.databinding.ContentListItemBinding;
 import com.tangli.musicplayer.music.MusicContent;
 
@@ -27,6 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
     private ContentListItemBinding itemBinding;
     private OnItemClickListener mOnItemClickListener;
+    private Context context;
 
 
 
@@ -34,6 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         itemBinding=ContentListItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        context=parent.getContext();
         return new ViewHolder(itemBinding);
     }
 
@@ -43,7 +50,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mCoverView.setImageResource(holder.mItem.getCover());
         holder.mTitleView.setText(holder.mItem.getTitle());
         holder.mArtistView.setText(holder.mItem.getArtist());
-        holder.mDurationView.setText(DateUtils.formatElapsedTime(holder.mItem.getDuration()));
+        RequestOptions options = RequestOptions
+                .bitmapTransform(new RoundedCorners(20));
+        Glide.with(context)
+                .load(holder.mItem.getCover())
+                .apply(options)
+                .into(holder.mCoverView);
         holder.mView.setOnClickListener(v -> {
             if (null != mOnItemClickListener) {
                 mOnItemClickListener.onItemClick(position);
@@ -71,7 +83,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public final ImageView mCoverView;
         public final TextView mTitleView;
         public final TextView mArtistView;
-        public final TextView mDurationView;
         public MusicContent.MusicItem mItem;
 
         public ViewHolder(ContentListItemBinding binding) {
@@ -80,7 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mCoverView = binding.cover;
             mTitleView = binding.title;
             mArtistView = binding.artist;
-            mDurationView = binding.duration;
+
         }
     }
 

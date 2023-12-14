@@ -11,11 +11,11 @@ public class MusicContent {
     public static final List<MusicItem> ITEMS = new ArrayList<>();
 
     static {
+        ITEMS.add(new MusicItem(R.drawable.main_cover, "Ukulele Fun Background", "PaulYudin", 164,R.raw.ukulele_fun_background));
         ITEMS.add(new MusicItem(R.drawable.camphor, "Again summer", "Music_Unlimited", 515,R.raw.again_summer_151646));
         ITEMS.add(new MusicItem(R.drawable.apartment_8318376_1920, "High In The Sky", "AlexiAction", 60,R.raw.high_in_the_sky_128400));
         ITEMS.add(new MusicItem(R.drawable.forest_party, "Indie Folk (Journey To The Sun)", "AlexGrohl", 215,R.raw.indie_folk_journey_to_the_sun_15044));
         ITEMS.add(new MusicItem(R.drawable.agriculture_8275498_1920, "Uplifting Corporate Pop Rock (It Is Time)", "MarkJuly", 242,R.raw.uplifting_corporate_pop_rock_it_is_time_113871));
-        ITEMS.add(new MusicItem(R.drawable.stones_8249322_1920, "Something good can work", "Two Door Cinema Club", 164,R.raw.ukulele_fun_background));
     }
 
 
