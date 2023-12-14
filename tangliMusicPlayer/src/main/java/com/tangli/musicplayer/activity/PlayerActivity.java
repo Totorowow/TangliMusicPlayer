@@ -14,6 +14,7 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 
+import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.music.PlayerService;
@@ -106,10 +107,7 @@ public abstract class PlayerActivity extends BaseActivity {
             unbindService(mConnection);
             mBound = false;
         }
-        if (mediaPlayer != null){
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
+        releasePlayer();
 
         super.onDestroy();
     }
@@ -135,7 +133,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }else {
             resId=MusicContent.ITEMS.get(position).getResId();
         }
-        mediaPlayer.release();
+        releasePlayer();
         mediaPlayer=MediaPlayer.create(this,resId);
         duration=mediaPlayer.getDuration()/1000;
         mService.play(mediaPlayer, duration, tinydb.getInt("last_position") != tinydb.getInt("next_position"));
@@ -148,6 +146,13 @@ public abstract class PlayerActivity extends BaseActivity {
 
     public void rePlay() {
         mService.rePlay(mediaPlayer);
+    }
+
+    public void releasePlayer(){
+        if (mediaPlayer!=null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 
 

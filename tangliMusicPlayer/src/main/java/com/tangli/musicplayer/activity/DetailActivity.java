@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
@@ -31,6 +32,7 @@ public class DetailActivity extends PlayerActivity {
     private boolean isClosePage;
     private DetailActivity detailActivity;
     private ScrollTextView musicName;
+    private ImageView playLast;
 
 
 
@@ -46,6 +48,7 @@ public class DetailActivity extends PlayerActivity {
         musicAuthor=findViewById(R.id.music_author);
         switchPlayState=findViewById(R.id.switch_play_state);
         playNext=findViewById(R.id.next);
+        playLast=findViewById(R.id.previous);
         closePage=findViewById(R.id.close_page);
         musicName=findViewById(R.id.music_name);
         detailActivity=this;
@@ -62,9 +65,8 @@ public class DetailActivity extends PlayerActivity {
         musicName.setPauseScroll(true);
         switchPlayState.setOnClickListener(v -> changePlayState());
         playNext.setOnClickListener(v -> playNextSong());
-        closePage.setOnClickListener(v -> {
-            endAnimation();
-        });
+        playLast.setOnClickListener(v -> playLastSong());
+        closePage.setOnClickListener(v -> endAnimation());
 
 
 
@@ -135,6 +137,21 @@ public class DetailActivity extends PlayerActivity {
         mCoverView.start();
     }
 
+    private void playLastSong(){
+        if (clickedItem!=-1 && clickedItem >0){
+            clickedItem--;
+            updateCurrentSong(clickedItem);
+        }else if (clickedItem==0){
+            clickedItem=-1;
+            Glide.with(detailActivity).load(R.drawable.main_cover).into(mCoverView);
+        }else {
+            clickedItem=MusicContent.ITEMS.size()-1;
+            Glide.with(detailActivity).load(MusicContent.ITEMS.get(MusicContent.ITEMS.size()-1).getCover()).into(mCoverView);
+        }
+        play(clickedItem);
+        mCoverView.start();
+    }
+
     private void updateCurrentSong(int item){
         musicName.setText(MusicContent.ITEMS.get(item).getTitle());
         musicAuthor.setText(MusicContent.ITEMS.get(item).getArtist());
@@ -150,6 +167,7 @@ public class DetailActivity extends PlayerActivity {
     private void endAnimation(){
         isClosePage=true;
         mCoverView.stop();
+        musicName.setPauseScroll(true);
         if (!mCoverView.isRunning()) {
             supportFinishAfterTransition();
         }

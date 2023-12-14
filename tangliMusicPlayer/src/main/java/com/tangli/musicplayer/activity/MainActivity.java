@@ -72,13 +72,10 @@ public class MainActivity extends PlayerActivity {
         mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewAdapter=new RecyclerViewAdapter(MusicContent.ITEMS);
 
-
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 playSong(position);
-
-
             }
 
             @Override
@@ -133,6 +130,11 @@ public class MainActivity extends PlayerActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |   Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

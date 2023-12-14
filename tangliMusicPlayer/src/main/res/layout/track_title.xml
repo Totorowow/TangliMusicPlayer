@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:transitionName="@string/transition_name_title">
 
-    <TextView
+    <com.tangli.musicplayer.view.ScrollTextView
         android:id="@+id/music_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ukulele Fun Background"
-        android:maxLines="1"
-        android:textSize="18sp"
-        android:textColor="@color/colorWhite"/>
-
-    <TextView
-        android:id="@+id/joiner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" - "
-        android:textSize="18sp"
-        android:textColor="@color/colorWhite"/>
-
-    <TextView
-        android:id="@+id/music_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PaulYudin"
-        android:textSize="18sp"
-        android:textColor="@color/colorWhite"/>
+        android:singleLine="true"
+        app:text_size="18sp"
+        app:text="Ukulele Fun Background"
+        app:text_color="@color/colorWhite"
+        app:speed="4"
+        app:times="20"
+        />
 
 </LinearLayout>

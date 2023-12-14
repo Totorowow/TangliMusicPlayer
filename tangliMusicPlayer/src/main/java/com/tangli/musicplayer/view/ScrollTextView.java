@@ -1,5 +1,6 @@
 package com.tangli.musicplayer.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -393,15 +394,14 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
     /**
      * touch to stop / start
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!clickEnable) {
             return true;
         }
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                pauseScroll = !pauseScroll;
-                break;
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            pauseScroll = !pauseScroll;
         }
         return true;
     }
@@ -458,7 +458,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
                         return;
                     }
                     try {
-                        Thread.sleep(speed * 1000);
+                        Thread.sleep(speed * 1000L);
                     } catch (InterruptedException e) {
                         Log.e(TAG, e.toString());
                     }
