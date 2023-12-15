@@ -14,11 +14,12 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 
-import com.hjq.toast.Toaster;
 import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.music.MusicContent;
 import com.tangli.musicplayer.music.PlayerService;
 import com.tangli.musicplayer.util.TinyDB;
+
+import java.util.Random;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public abstract class PlayerActivity extends BaseActivity {
     private int resId;
 
     private TinyDB tinydb;
+    private LoopMode mode;
 
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
@@ -78,6 +80,8 @@ public abstract class PlayerActivity extends BaseActivity {
         if (mProgressView != null) {
             mProgressView.setProgress(position);
             mProgressView.setMax(duration);
+
+
         }
     }
 
@@ -135,24 +139,56 @@ public abstract class PlayerActivity extends BaseActivity {
         }
         releasePlayer();
         mediaPlayer=MediaPlayer.create(this,resId);
+
         duration=mediaPlayer.getDuration()/1000;
         mService.play(mediaPlayer, duration, tinydb.getInt("last_position") != tinydb.getInt("next_position"));
+        mediaPlayer.setOnCompletionListener(mp -> {
+            if (mOnCompletionListener != null) {
+                mOnCompletionListener.onCompletion(mp);
+            }else {
+                replay(mp);
+            }
+
+
+        });
+
 
     }
+
+    public void replay(MediaPlayer mediaPlayer){
+        mService.rePlay(mediaPlayer);
+    }
+
+
 
     public void pause() {
         mService.pause(mediaPlayer);
     }
 
-    public void rePlay() {
-        mService.rePlay(mediaPlayer);
-    }
 
     public void releasePlayer(){
         if (mediaPlayer!=null) {
-            mediaPlayer.stop();
+            mediaPlayer.reset();
             mediaPlayer.release();
+            mediaPlayer=null;
         }
+    }
+
+    private MediaPlayer.OnCompletionListener mOnCompletionListener;
+
+    public void setOnCompletionListener(MediaPlayer.OnCompletionListener onCompletionListener) {
+        mOnCompletionListener = onCompletionListener;
+    }
+
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+
+    }
+
+    public enum LoopMode{
+        SINGLE,LIST,RANDOM
     }
 
 

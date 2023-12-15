@@ -26,6 +26,9 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import static com.tangli.musicplayer.R.*;
+import static com.tangli.musicplayer.R.id.*;
+
 public class MainActivity extends PlayerActivity {
 
 
@@ -40,7 +43,7 @@ public class MainActivity extends PlayerActivity {
         mainBinding=ActivityMainBinding.inflate(getLayoutInflater());
         preferences = getSharedPreferences("tangli_music_player", Context.MODE_PRIVATE);
         setContentView(mainBinding.getRoot());
-        StatusBarUtil.setColor(this, getColor(R.color.colorBlack));
+        StatusBarUtil.setColor(this, getColor(color.colorBlack));
         StatusBarUtil.setLightMode(this);
         initSongAdapter();
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(GravityCompat.START));
@@ -49,10 +52,10 @@ public class MainActivity extends PlayerActivity {
 
         mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
-                case R.id.language_item:
+                case language_item:
                     setAppLanguage();
                     break;
-                case R.id.about_item:
+                case about_item:
                     startActivity(new Intent(this,AboutActivity.class));
                     break;
                 default:
@@ -103,14 +106,14 @@ public class MainActivity extends PlayerActivity {
     }
 
     private void setAppLanguage(){
-        final String[] items = { getString(R.string.simplified_chinese),getString(R.string.english),getString(R.string.japanese),getString(R.string.korean) };
+        final String[] items = { getString(string.simplified_chinese),getString(string.english),getString(string.japanese),getString(string.korean) };
         selectItem=preferences.getInt("app_language",0);
         AlertDialog.Builder singleChoiceDialog =
                 new AlertDialog.Builder(MainActivity.this);
-        singleChoiceDialog.setTitle(getString(R.string.select_language));
+        singleChoiceDialog.setTitle(getString(string.select_language));
         singleChoiceDialog.setSingleChoiceItems(items, selectItem,
                 (dialog, which) -> selectItem = which);
-        singleChoiceDialog.setPositiveButton(getString(R.string.confirm),
+        singleChoiceDialog.setPositiveButton(getString(string.confirm),
                 (dialog, which) -> {
                     if (selectItem != -1) {
 

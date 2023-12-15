@@ -2,9 +2,10 @@
 
 package com.tangli.musicplayer.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.transition.Transition;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,10 +34,8 @@ public class DetailActivity extends PlayerActivity {
     private DetailActivity detailActivity;
     private ScrollTextView musicName;
     private ImageView playLast;
-
-
-
-
+    private ImageView repeat;
+    private LoopMode loopMode=LoopMode.SINGLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,7 @@ public class DetailActivity extends PlayerActivity {
         playLast=findViewById(R.id.previous);
         closePage=findViewById(R.id.close_page);
         musicName=findViewById(R.id.music_name);
+        repeat=findViewById(R.id.repeat);
         detailActivity=this;
 
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
@@ -67,7 +67,7 @@ public class DetailActivity extends PlayerActivity {
         playNext.setOnClickListener(v -> playNextSong());
         playLast.setOnClickListener(v -> playLastSong());
         closePage.setOnClickListener(v -> endAnimation());
-
+        repeat.setOnClickListener(v -> modifyLoopMode());
 
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
@@ -105,6 +105,39 @@ public class DetailActivity extends PlayerActivity {
             }
         });
 
+    }
+
+    private void modifyLoopMode(){
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        int screenHeight = displayMetrics.heightPixels;
+        Toaster.setGravity(Gravity.TOP,0, (int) (screenHeight*0.1));
+        if (loopMode==LoopMode.SINGLE){
+            loopMode=LoopMode.LIST;
+            repeat.setImageDrawable(AppCompatResources.getDrawable(detailActivity,R.drawable.ic_repeat_white_24dp));
+            Toaster.show(getString(R.string.list_loop));
+        }else if (loopMode==LoopMode.LIST){
+            loopMode=LoopMode.RANDOM;
+            repeat.setImageDrawable(AppCompatResources.getDrawable(detailActivity,R.drawable.ic_shuffle_white_24dp));
+            Toaster.show(getString(R.string.random_loop));
+
+        }else {
+            loopMode=LoopMode.SINGLE;
+            repeat.setImageDrawable(AppCompatResources.getDrawable(detailActivity,R.drawable.ic_repeat_one));
+            Toaster.show(getString(R.string.single_loop));
+        }
+        setOnCompletionListener(mp -> {
+            if (loopMode== LoopMode.SINGLE){
+                updateCurrentSong(clickedItem);
+                play(clickedItem);
+            }else if (loopMode==LoopMode.RANDOM){
+                clickedItem=randInt(0,4);
+                updateCurrentSong(clickedItem);
+                play(clickedItem);
+            }else {
+                playNextSong();
+            }
+
+        });
     }
 
     private void changePlayState(){
@@ -179,5 +212,7 @@ public class DetailActivity extends PlayerActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 
 }

@@ -53,7 +53,9 @@ public class PlayerService extends Service {
             Log.e(TAG,"Last play progress:"+getPosition());
         }
         mWorker.setDuration(duration);
+        //mediaPlayer.prepareAsync();
         mediaPlayer.start();
+
     }
 
     public boolean isPlaying() {
@@ -63,7 +65,7 @@ public class PlayerService extends Service {
     public void pause(MediaPlayer mediaPlayer) {
         if (mWorker != null) {
             mWorker.doPause();
-            if (mediaPlayer.isPlaying()){
+            if (mediaPlayer!=null && mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
             }
         }
@@ -150,4 +152,5 @@ public class PlayerService extends Service {
             return PlayerService.this;
         }
     }
+
 }

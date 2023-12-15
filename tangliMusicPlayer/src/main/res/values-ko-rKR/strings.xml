@@ -19,5 +19,8 @@
     <string name="favorites">좋아요</string>
     <string name="user_name">탕글리</string>
     <string name="user_job">음악가</string>
+    <string name="single_loop">단일 루프로 전환</string>
+    <string name="list_loop">목록 루프로 전환</string>
+    <string name="random_loop">무작위 루프로 전환</string>
     <string name="personal_description">내가 꾸었던 소원들이 쭉 꽃피워, 바람과 모래를 이겨내고 그때의 꿈을 호위하길 바라요</string>
 </resources>
