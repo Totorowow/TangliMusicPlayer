@@ -3,11 +3,13 @@
 package com.tangli.musicplayer.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,7 +46,9 @@ public class DetailActivity extends PlayerActivity {
     private ScrollTextView musicName;
     private ImageView playLast;
     private ImageView repeat;
+    private ImageView favourite;
     private LoopMode loopMode=LoopMode.SINGLE;
+    private MusicContent.MusicItem musicItem;
 
 
     @Override
@@ -64,12 +68,23 @@ public class DetailActivity extends PlayerActivity {
         //musicName.setTextSize(18);
         initView();
         musicName.setPauseScroll(true);
+        if (clickedItem==-1){
+            musicItem=MusicContent.ITEMS.get(0);
+        }else {
+            musicItem=MusicContent.ITEMS.get(clickedItem);
+        }
+        if (musicItem.isFavourite()){
+            favourite.setColorFilter(getColor(R.color.lightPurple));
+        }else {
+            favourite.setColorFilter(getColor(R.color.colorWhite));
+        }
         switchPlayState.setOnClickListener(v -> changePlayState());
         playNext.setOnClickListener(v -> playNextSong());
         playLast.setOnClickListener(v -> playLastSong());
         closePage.setOnClickListener(v -> endAnimation());
         shareMusic.setOnClickListener(v -> shareSong());
         repeat.setOnClickListener(v -> modifyLoopMode());
+        favourite.setOnClickListener(v -> addToFavourite());
 
 
 
@@ -120,6 +135,7 @@ public class DetailActivity extends PlayerActivity {
         shareMusic=findViewById(R.id.share_music);
         musicName=findViewById(R.id.music_name);
         repeat=findViewById(R.id.repeat);
+        favourite=findViewById(R.id.favourite);
     }
 
     private void modifyLoopMode(){
@@ -210,7 +226,7 @@ public class DetailActivity extends PlayerActivity {
         pause();
         mCoverView.stop();
         File file=new File(this.getCacheDir(),"rainbow.mp3");
-        InputStream inputStream= getResources().openRawResource(MusicContent.ITEMS.get(clickedItem).getResId());
+        InputStream inputStream= getResources().openRawResource(musicItem.getResId());
         try
         {
             OutputStream out = Files.newOutputStream(file.toPath());
@@ -227,6 +243,16 @@ public class DetailActivity extends PlayerActivity {
         share.setType("audio/*");
         share.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(share, getString(R.string.share_to)));
+    }
+
+    private void addToFavourite(){
+        if (musicItem.isFavourite()){
+            musicItem.addFavourite(false);
+            favourite.setColorFilter(getColor(R.color.colorWhite));
+        }else {
+            musicItem.addFavourite(true);
+            favourite.setColorFilter(getColor(R.color.lightPurple));
+        }
     }
 
 
