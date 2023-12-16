@@ -20,5 +20,6 @@
     <string name="single_loop">単一ループに切り替えました</string>
     <string name="list_loop">リストループに切り替えました</string>
     <string name="random_loop">ランダムループに切り替えました</string>
+    <string name="share_to">Share to:</string>
     <string name="personal_description">叶えた願いがずっと花開き、風にも砂にも負けずあの頃の夢を護衛して欲しい</string>
 </resources>

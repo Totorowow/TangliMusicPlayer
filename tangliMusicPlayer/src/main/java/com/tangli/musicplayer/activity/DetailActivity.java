@@ -2,6 +2,8 @@
 
 package com.tangli.musicplayer.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -18,7 +20,13 @@ import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.ScrollTextView;
 import com.tangli.musicplayer.view.TransitionAdapter;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.FileProvider;
 
 public class DetailActivity extends PlayerActivity {
 
@@ -30,6 +38,7 @@ public class DetailActivity extends PlayerActivity {
     private ImageView switchPlayState;
     private ImageView playNext;
     private ImageView closePage;
+    private ImageView shareMusic;
     private boolean isClosePage;
     private DetailActivity detailActivity;
     private ScrollTextView musicName;
@@ -37,22 +46,13 @@ public class DetailActivity extends PlayerActivity {
     private ImageView repeat;
     private LoopMode loopMode=LoopMode.SINGLE;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail);
-
-        mCoverView = findViewById(R.id.cover);
-        musicAuthor=findViewById(R.id.music_author);
-        switchPlayState=findViewById(R.id.switch_play_state);
-        playNext=findViewById(R.id.next);
-        playLast=findViewById(R.id.previous);
-        closePage=findViewById(R.id.close_page);
-        musicName=findViewById(R.id.music_name);
-        repeat=findViewById(R.id.repeat);
         detailActivity=this;
-
         StatusBarUtil.setColor(this, getColor(R.color.colorPrimaryDark));
         StatusBarUtil.setLightMode(this);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
@@ -62,12 +62,15 @@ public class DetailActivity extends PlayerActivity {
         //musicName.setTextColor(Color.WHITE);
         //musicName.setScrollForever(true);
         //musicName.setTextSize(18);
+        initView();
         musicName.setPauseScroll(true);
         switchPlayState.setOnClickListener(v -> changePlayState());
         playNext.setOnClickListener(v -> playNextSong());
         playLast.setOnClickListener(v -> playLastSong());
         closePage.setOnClickListener(v -> endAnimation());
+        shareMusic.setOnClickListener(v -> shareSong());
         repeat.setOnClickListener(v -> modifyLoopMode());
+
 
 
         mCoverView.setCallbacks(new MusicCoverView.Callbacks() {
@@ -105,6 +108,18 @@ public class DetailActivity extends PlayerActivity {
             }
         });
 
+    }
+
+    private void initView(){
+        mCoverView = findViewById(R.id.cover);
+        musicAuthor=findViewById(R.id.music_author);
+        switchPlayState=findViewById(R.id.switch_play_state);
+        playNext=findViewById(R.id.next);
+        playLast=findViewById(R.id.previous);
+        closePage=findViewById(R.id.close_page);
+        shareMusic=findViewById(R.id.share_music);
+        musicName=findViewById(R.id.music_name);
+        repeat=findViewById(R.id.repeat);
     }
 
     private void modifyLoopMode(){
@@ -191,6 +206,29 @@ public class DetailActivity extends PlayerActivity {
         Glide.with(detailActivity).load(MusicContent.ITEMS.get(item).getCover()).into(mCoverView);
     }
 
+    private void shareSong(){
+        pause();
+        mCoverView.stop();
+        File file=new File(this.getCacheDir(),"rainbow.mp3");
+        InputStream inputStream= getResources().openRawResource(MusicContent.ITEMS.get(clickedItem).getResId());
+        try
+        {
+            OutputStream out = Files.newOutputStream(file.toPath());
+            byte[] buf = new byte[1024];
+            int len;
+            while ( (len = inputStream.read(buf, 0, buf.length)) != -1){
+                out.write(buf, 0, len);
+            }
+            inputStream.close();
+            out.close();
+        }catch (Exception ignored) {}
+        final Uri uri = FileProvider.getUriForFile(this, getPackageName()+".fileProvider", file);
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("audio/*");
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, getString(R.string.share_to)));
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -205,7 +243,6 @@ public class DetailActivity extends PlayerActivity {
             supportFinishAfterTransition();
         }
     }
-
 
 
     @Override

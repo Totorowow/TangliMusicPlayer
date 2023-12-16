@@ -36,6 +36,7 @@
             />
 
         <ImageView
+            android:id="@+id/share_music"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
