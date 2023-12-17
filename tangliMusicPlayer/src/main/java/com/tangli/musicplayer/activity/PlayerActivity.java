@@ -36,9 +36,8 @@ public abstract class PlayerActivity extends BaseActivity {
     private MediaPlayer mediaPlayer;
     private int duration=108;
     private int resId;
-
     private TinyDB tinydb;
-    private LoopMode mode;
+
 
     @SuppressLint("HandlerLeak")
     private final Handler mUpdateProgressHandler = new Handler() {
@@ -89,6 +88,7 @@ public abstract class PlayerActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tinydb= new TinyDB(this);
+
         // Bind to PlayerService
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);

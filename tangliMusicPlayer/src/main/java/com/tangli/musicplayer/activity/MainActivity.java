@@ -4,21 +4,22 @@ package com.tangli.musicplayer.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 
 import com.leaf.library.StatusBarUtil;
-import com.tangli.musicplayer.R;
 import com.tangli.musicplayer.adapter.RecyclerViewAdapter;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
 import com.tangli.musicplayer.music.MusicContent;
+import com.tangli.musicplayer.util.DatabaseHelper;
 
+import java.util.List;
 import java.util.Objects;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import static com.tangli.musicplayer.R.*;
 import static com.tangli.musicplayer.R.id.*;
+import static com.tangli.musicplayer.util.DatabaseHelper.DATABASE_NAME;
 
 public class MainActivity extends PlayerActivity {
 
@@ -36,6 +38,9 @@ public class MainActivity extends PlayerActivity {
     private int selectItem=-1;
     private SharedPreferences preferences;
     private RecyclerViewAdapter recyclerViewAdapter;
+    public DatabaseHelper dbHelper;
+    private SQLiteDatabase sqLiteDatabase;
+    public List<MusicContent.MusicItem> songList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,8 @@ public class MainActivity extends PlayerActivity {
         setContentView(mainBinding.getRoot());
         StatusBarUtil.setColor(this, getColor(color.colorBlack));
         StatusBarUtil.setLightMode(this);
+        dbHelper=new DatabaseHelper(this,DATABASE_NAME,null,1);
+        songList=dbHelper.getSongList(dbHelper.getWritableDatabase());
         initSongAdapter();
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(GravityCompat.START));
         mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
@@ -69,11 +76,13 @@ public class MainActivity extends PlayerActivity {
 
     public void onFabClick(View view) {
         playSong(-1);
+        //dbHelper.intSongList(dbHelper.getWritableDatabase());
+        //recyclerViewAdapter.notifyDataSetChanged();
     }
 
     private void initSongAdapter(){
         mainBinding.tracks.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewAdapter=new RecyclerViewAdapter(MusicContent.ITEMS);
+        recyclerViewAdapter=new RecyclerViewAdapter(songList);
 
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override

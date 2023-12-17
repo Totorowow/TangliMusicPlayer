@@ -2,6 +2,7 @@
 
 package com.tangli.musicplayer.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -187,6 +188,7 @@ public class DetailActivity extends PlayerActivity {
     }
 
     private void playNextSong(){
+
         if (clickedItem!=-1 && clickedItem < MusicContent.ITEMS.size()-1){
             clickedItem++;
             updateCurrentSong(clickedItem);
@@ -253,7 +255,9 @@ public class DetailActivity extends PlayerActivity {
             musicItem.addFavourite(true);
             favourite.setColorFilter(getColor(R.color.lightPurple));
         }
+
     }
+
 
 
     @Override
@@ -268,6 +272,11 @@ public class DetailActivity extends PlayerActivity {
         if (!mCoverView.isRunning()) {
             supportFinishAfterTransition();
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
 
