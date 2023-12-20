@@ -2,15 +2,12 @@
 
 package com.tangli.musicplayer.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +15,9 @@ import com.bumptech.glide.Glide;
 import com.hjq.toast.Toaster;
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.R;
+import com.tangli.musicplayer.bean.Coconut;
 import com.tangli.musicplayer.music.MusicContent;
+import com.tangli.musicplayer.util.GreenDaoUtil;
 import com.tangli.musicplayer.view.MusicCoverView;
 import com.tangli.musicplayer.view.ScrollTextView;
 import com.tangli.musicplayer.view.TransitionAdapter;
@@ -49,7 +48,7 @@ public class DetailActivity extends PlayerActivity {
     private ImageView repeat;
     private ImageView favourite;
     private LoopMode loopMode=LoopMode.SINGLE;
-    private MusicContent.MusicItem musicItem;
+    private Coconut musicItem;
 
 
     @Override
@@ -62,6 +61,8 @@ public class DetailActivity extends PlayerActivity {
         StatusBarUtil.setLightMode(this);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
+
+
         //musicName.setSpeed(4);
         //musicName.setText("Ukulele Fun Background");
         //musicName.setTextColor(Color.WHITE);
@@ -74,7 +75,7 @@ public class DetailActivity extends PlayerActivity {
         }else {
             musicItem=MusicContent.ITEMS.get(clickedItem);
         }
-        if (musicItem.isFavourite()){
+        if (musicItem.getIsFavourite()){
             favourite.setColorFilter(getColor(R.color.lightPurple));
         }else {
             favourite.setColorFilter(getColor(R.color.colorWhite));
@@ -219,7 +220,7 @@ public class DetailActivity extends PlayerActivity {
     }
 
     private void updateCurrentSong(int item){
-        musicName.setText(MusicContent.ITEMS.get(item).getTitle());
+        musicName.setText(MusicContent.ITEMS.get(item).getName());
         musicAuthor.setText(MusicContent.ITEMS.get(item).getArtist());
         Glide.with(detailActivity).load(MusicContent.ITEMS.get(item).getCover()).into(mCoverView);
     }
@@ -248,13 +249,14 @@ public class DetailActivity extends PlayerActivity {
     }
 
     private void addToFavourite(){
-        if (musicItem.isFavourite()){
-            musicItem.addFavourite(false);
+        if (musicItem.getIsFavourite()){
+            musicItem.setIsFavourite(false);
             favourite.setColorFilter(getColor(R.color.colorWhite));
         }else {
-            musicItem.addFavourite(true);
+            musicItem.setIsFavourite(true);
             favourite.setColorFilter(getColor(R.color.lightPurple));
         }
+        GreenDaoUtil.updateSong(musicItem);
 
     }
 

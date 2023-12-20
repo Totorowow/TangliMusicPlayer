@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.tangli.musicplayer.databinding.ActivitySplashBinding;
+import com.tangli.musicplayer.util.TinyDB;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding splashBinding;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         splashBinding=ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(splashBinding.getRoot());
+
         new Thread() {
             @Override
             public void run() {

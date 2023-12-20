@@ -2,11 +2,9 @@
 package com.tangli.musicplayer.adapter;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.tangli.musicplayer.R;
-import com.tangli.musicplayer.TangliApplication;
+import com.tangli.musicplayer.bean.Coconut;
 import com.tangli.musicplayer.databinding.ContentListItemBinding;
-import com.tangli.musicplayer.music.MusicContent;
 
 import java.util.List;
 
@@ -25,9 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private final List<MusicContent.MusicItem> mValues;
+    private final List<Coconut> mValues;
 
-    public RecyclerViewAdapter(List<MusicContent.MusicItem> items) {
+    public RecyclerViewAdapter(List<Coconut> items) {
         mValues = items;
     }
     private ContentListItemBinding itemBinding;
@@ -48,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mCoverView.setImageResource(holder.mItem.getCover());
-        holder.mTitleView.setText(holder.mItem.getTitle());
+        holder.mTitleView.setText(holder.mItem.getName());
         holder.mArtistView.setText(holder.mItem.getArtist());
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(20));
@@ -83,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public final ImageView mCoverView;
         public final TextView mTitleView;
         public final TextView mArtistView;
-        public MusicContent.MusicItem mItem;
+        public Coconut mItem;
 
         public ViewHolder(ContentListItemBinding binding) {
             super(binding.getRoot());

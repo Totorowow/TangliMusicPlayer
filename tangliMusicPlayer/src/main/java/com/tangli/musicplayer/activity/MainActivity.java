@@ -4,7 +4,6 @@ package com.tangli.musicplayer.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -12,9 +11,11 @@ import android.view.View;
 
 import com.leaf.library.StatusBarUtil;
 import com.tangli.musicplayer.adapter.RecyclerViewAdapter;
+import com.tangli.musicplayer.bean.Coconut;
 import com.tangli.musicplayer.databinding.ActivityMainBinding;
 import com.tangli.musicplayer.music.MusicContent;
-import com.tangli.musicplayer.util.DatabaseHelper;
+import com.tangli.musicplayer.util.GreenDaoUtil;
+import com.tangli.musicplayer.util.TinyDB;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +28,11 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import static com.tangli.musicplayer.R.*;
-import static com.tangli.musicplayer.R.id.*;
-import static com.tangli.musicplayer.util.DatabaseHelper.DATABASE_NAME;
+import static com.tangli.musicplayer.R.color;
+import static com.tangli.musicplayer.R.id.about_item;
+import static com.tangli.musicplayer.R.id.language_item;
+import static com.tangli.musicplayer.R.string;
+
 
 public class MainActivity extends PlayerActivity {
 
@@ -38,9 +41,9 @@ public class MainActivity extends PlayerActivity {
     private int selectItem=-1;
     private SharedPreferences preferences;
     private RecyclerViewAdapter recyclerViewAdapter;
-    public DatabaseHelper dbHelper;
-    private SQLiteDatabase sqLiteDatabase;
-    public List<MusicContent.MusicItem> songList;
+    public List<Coconut> songList;
+    private TinyDB tinyDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,34 +53,29 @@ public class MainActivity extends PlayerActivity {
         setContentView(mainBinding.getRoot());
         StatusBarUtil.setColor(this, getColor(color.colorBlack));
         StatusBarUtil.setLightMode(this);
-        dbHelper=new DatabaseHelper(this,DATABASE_NAME,null,1);
-        songList=dbHelper.getSongList(dbHelper.getWritableDatabase());
+        tinyDB=new TinyDB(this);
+        initSongList();
         initSongAdapter();
         mainBinding.toggleNavigation.setOnClickListener(v -> mainBinding.drawerLayout.openDrawer(GravityCompat.START));
         mainBinding.fab.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-
-
-        mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case language_item:
-                    setAppLanguage();
-                    break;
-                case about_item:
-                    startActivity(new Intent(this,AboutActivity.class));
-                    break;
-                default:
-                    break;
-            }
-            mainBinding.drawerLayout.closeDrawers();
-            return true;
-        });
-
+        initNavigationView();
     }
+
+
 
     public void onFabClick(View view) {
         playSong(-1);
         //dbHelper.intSongList(dbHelper.getWritableDatabase());
         //recyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    private void initSongList(){
+        boolean notFirstInstall = tinyDB.getBoolean("not_first_install");
+        if (!notFirstInstall) {
+            GreenDaoUtil.insertInTxSong(MusicContent.ITEMS);
+            tinyDB.putBoolean("not_first_install",true);
+        }
+        songList= GreenDaoUtil.getAllSongs();
     }
 
     private void initSongAdapter(){
@@ -97,6 +95,23 @@ public class MainActivity extends PlayerActivity {
         });
         mainBinding.tracks.setAdapter(recyclerViewAdapter);
 
+    }
+
+    private void initNavigationView(){
+        mainBinding.navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case language_item:
+                    setAppLanguage();
+                    break;
+                case about_item:
+                    startActivity(new Intent(this,AboutActivity.class));
+                    break;
+                default:
+                    break;
+            }
+            mainBinding.drawerLayout.closeDrawers();
+            return true;
+        });
     }
 
     private void playSong(int position){

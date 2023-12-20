@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 32
 
@@ -7,8 +7,8 @@ android {
         applicationId "com.tangli.musicplayer"
         minSdkVersion 26
         targetSdkVersion 32
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 10
+        versionName "1.1"
     }
     buildTypes {
         debug {
@@ -23,6 +23,16 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+
+
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.tangli.musicplayer.database.greenDao.db'
+        targetGenDir 'src.main.java'
+        generateTests false
+        targetGenDirTests 'src/main/java'
+
     }
 }
 
@@ -42,6 +52,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.github.jrvansuita:MaterialAbout:0.3.0'
+    implementation 'org.greenrobot:greendao:3.3.0'
+    implementation 'org.greenrobot:greendao-generator:3.3.0'
+
 
 
 }

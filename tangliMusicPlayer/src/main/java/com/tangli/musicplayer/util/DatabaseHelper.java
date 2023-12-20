@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.tangli.musicplayer.bean.Coconut;
 import com.tangli.musicplayer.music.MusicContent;
 
 import java.util.ArrayList;
@@ -24,8 +26,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "duration integer, "
             + "resId integer, "
             + "isFavourite integer)";
-    public List<MusicContent.MusicItem> songList;
-    public MusicContent.MusicItem musicItem;
+    public List<Coconut> songList;
+    public Coconut musicItem;
     private Context mContext;
 
     public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -47,18 +49,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void intSongList(SQLiteDatabase db){
         for (int i=0;i<MusicContent.ITEMS.size();i++){
             ContentValues values = new ContentValues();
-            values.put("id", MusicContent.ITEMS.get(i).getSongId());
+            values.put("id", MusicContent.ITEMS.get(i).getId());
             values.put("cover", MusicContent.ITEMS.get(i).getCover());
-            values.put("name", MusicContent.ITEMS.get(i).getTitle());
+            values.put("name", MusicContent.ITEMS.get(i).getName());
             values.put("artist", MusicContent.ITEMS.get(i).getArtist());
             values.put("duration", MusicContent.ITEMS.get(i).getDuration());
             values.put("resId", MusicContent.ITEMS.get(i).getResId());
-            values.put("isFavourite", MusicContent.ITEMS.get(i).isFavourite() ? 0 : 1);
+            values.put("isFavourite", MusicContent.ITEMS.get(i).getIsFavourite() );
             db.insert(TABLE_NAME, null, values);
         }
     }
 
-    public List<MusicContent.MusicItem> getSongList(SQLiteDatabase db){
+    public List<Coconut> getSongList(SQLiteDatabase db){
         songList=new ArrayList<>();
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
@@ -70,11 +72,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") int duration = cursor.getInt(cursor.getColumnIndex("duration"));
                 @SuppressLint("Range") int resID = cursor.getInt(cursor.getColumnIndex("resId"));
                 @SuppressLint("Range") int isFavourite = cursor.getInt(cursor.getColumnIndex("isFavourite"));
-                musicItem=new MusicContent.MusicItem(id,cover,name,artist,duration,resID, isFavourite == 0);
+                musicItem=new Coconut((long) id,cover,name,artist,duration,resID, isFavourite == 0);
                 songList.add(musicItem);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return songList;
     }
+
+
 }
