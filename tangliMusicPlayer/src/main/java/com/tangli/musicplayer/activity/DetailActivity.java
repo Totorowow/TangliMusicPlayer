@@ -61,7 +61,11 @@ public class DetailActivity extends PlayerActivity {
         StatusBarUtil.setLightMode(this);
         Bundle bundle=getIntent().getBundleExtra("snow_bundle");
         clickedItem=bundle.getInt("clicked_item");
-
+        if (clickedItem==-1){
+            musicItem=MusicContent.ITEMS.get(0);
+        }else {
+            musicItem=MusicContent.ITEMS.get(clickedItem);
+        }
 
         //musicName.setSpeed(4);
         //musicName.setText("Ukulele Fun Background");
@@ -70,16 +74,8 @@ public class DetailActivity extends PlayerActivity {
         //musicName.setTextSize(18);
         initView();
         musicName.setPauseScroll(true);
-        if (clickedItem==-1){
-            musicItem=MusicContent.ITEMS.get(0);
-        }else {
-            musicItem=MusicContent.ITEMS.get(clickedItem);
-        }
-        if (musicItem.getIsFavourite()){
-            favourite.setColorFilter(getColor(R.color.lightPurple));
-        }else {
-            favourite.setColorFilter(getColor(R.color.colorWhite));
-        }
+
+
         switchPlayState.setOnClickListener(v -> changePlayState());
         playNext.setOnClickListener(v -> playNextSong());
         playLast.setOnClickListener(v -> playLastSong());
@@ -87,6 +83,12 @@ public class DetailActivity extends PlayerActivity {
         shareMusic.setOnClickListener(v -> shareSong());
         repeat.setOnClickListener(v -> modifyLoopMode());
         favourite.setOnClickListener(v -> addToFavourite());
+
+        if (musicItem.getIsFavourite()){
+            favourite.setColorFilter(getColor(R.color.lightPurple));
+        }else {
+            favourite.setColorFilter(getColor(R.color.colorWhite));
+        }
 
 
 
@@ -200,11 +202,17 @@ public class DetailActivity extends PlayerActivity {
             clickedItem=1;
             Glide.with(detailActivity).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
         }
+        if (MusicContent.ITEMS.get(clickedItem).getIsFavourite()){
+            favourite.setColorFilter(getColor(R.color.lightPurple));
+        }else {
+            favourite.setColorFilter(getColor(R.color.colorWhite));
+        }
         play(clickedItem);
         mCoverView.start();
     }
 
     private void playLastSong(){
+
         if (clickedItem!=-1 && clickedItem >1){
             clickedItem--;
             updateCurrentSong(clickedItem);
@@ -214,6 +222,11 @@ public class DetailActivity extends PlayerActivity {
         }else {
             clickedItem=MusicContent.ITEMS.size()-1;
             Glide.with(detailActivity).load(MusicContent.ITEMS.get(clickedItem).getCover()).into(mCoverView);
+        }
+        if (MusicContent.ITEMS.get(clickedItem).getIsFavourite()){
+            favourite.setColorFilter(getColor(R.color.lightPurple));
+        }else {
+            favourite.setColorFilter(getColor(R.color.colorWhite));
         }
         play(clickedItem);
         mCoverView.start();
@@ -278,6 +291,7 @@ public class DetailActivity extends PlayerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
 
     }
 
